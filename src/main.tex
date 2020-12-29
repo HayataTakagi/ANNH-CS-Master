@@ -20,6 +20,7 @@
 %% dvipdfm 
 %% http://hamilcar.phys.kyushu-u.ac.jp/~hirata/dvipdfm/
 
+
 \setcounter{tocdepth}{3}
 \setcounter{page}{-1}
 
@@ -129,7 +130,7 @@ The rest of this paper is organized as follows. In Section \ref{section:related-
 \label{section:related-works}
 
 \section{Nearest neighbor query and best-first search on R-tree.}
-In multiple fields including database management systems, data mining and information retrieval, a basic yet important problem is the (k) nearest neighbor query problem (NN, or kNN). Given a query point q and a point dataset $P$, NN returns the nearest point to $q$ from the dataset $P$. Research has been widely conducted focusing on solving the NN query with good performance, one of the most popular solutions proposed is R-tree based processing \cite{NN,cheung1998enhanced,hjaltason1999distance}. R-tree \cite{R-tree} is a spatial index that groups close points in space with the minimum bounding rectangle (MBR), and manages MBRs with a tree structure. Roussopoulos et al \cite{NN} first proposed an R-tree based method for processing the NN query with geographic information systems (GISs). Hjaltason et al \cite{hjaltason1999distance} proposed a best-first method with R-tree to solve the NN query. The best-first method searches the nearest neighbor in best first manner. This maintains a priority queue that contains the MBRs of R-tree with the order of minimum distance to query point $q$. In our research, we also propose the solutions with the best-first method to solve the BNNH query.
+In multiple fields including database management systems, data mining and information retrieval, a basic yet important problem is the (k) nearest neighbor query problem (NN, or kNN). Given a query point q and a point dataset $P$, NN returns the nearest point to $q$ from the dataset $P$. Research has been widely conducted focusing on solving the NN query with good performance, one of the most popular solutions proposed is R-tree based processing \cite{NN,cheung1998enhanced,hjaltason1999distance}. R-tree \cite{R-tree} is a spatial index that groups close points in space with the minimum bounding rectangle (MBR), and manages MBRs with a tree structure. Roussopoulos et al \cite{NN} first proposed an R-tree based method for processing the NN query with geographic information systems (GISs). Hjaltason et al \cite{hjaltason1999distance} proposed a best-first method with R-tree to solve the NN query. The best-first method searches the nearest neighbor in best first manner. This maintains a priority queue that contains the MBRs of R-tree with the order of minimum distance to query point $q$. In our research, we also propose the solutions with the best-first method to solve the ANNH query.
 
 \section{Group version of nearest neighbor query.}
 As real-life applications are dissatisfied with only evaluating the relationship between single points like the conventional NN query, many variants of the NN query have been studied. Papadias et al. developed aggregate nearest neighbor query (ANN) \cite{ANN} to retrieve points with the smallest aggregate distance to multiple query points in metric space. ANN inputs a group of query points Q and aims to find a nearest single point that has the smallest aggregate distance to Q. Thus, although ANNH and ANN are similar in that they receive multiple queries, the difference is that ANNH explores clusters whereas ANN explores points. Deng et al. \cite{GNG} proposed a group nearest group query (GNG), which is a spatial query returning a group of points. In GNG, the response group is evaluated based on the distance from the query for each point, whereas in ANNH, a set of points is regarded as a cluster, and the cluster density is also included in the evaluation. Besides evaluating the similarity in terms of the Euclidean distance function, Dong et al, \cite{dong2017grid} proposed an aggregate reverse rank query which uses an inner product function to evaluating the similarity between a point and a group of points in the spatial algorithm. Nearest neighborhood search (NNH) \cite{NNH} extends the NN query and for query point q returns the nearest cluster which is a a circle with fixed radius $\rho$. Because the radius is fixed, it is impossible to
@@ -338,7 +339,7 @@ In the point-based method, filtering is performed on the data points one by one.
 
 \section{Grid-index-based solution}
 
-We notice that in the proposed point-base and group-base solutions, the most time-consuming task is to find the kNN points for a specific point (Line 5 in Algorithm \ref{alg:point} and Line 14 in Algorithm \ref{alg:mbr}). This can be avoided by reducing the number of clusters created by filtering. It has also been reported that, in NN search filtering, if a search is performed near a query point, the filtering bound is reduced and the amount of filtering is increased \cite{BNNH}. From this, the data set is arranged on the grid in the two-dimensional space, as in the previous studies \cite{BNNH,weber1998quantitative,mouratidis2006continuous,yu2005monitoring,mouratidis2005conceptual,xiong2005sea}. Figure \ref{fig:solution-grid} shows an example where there is one query point (or the center of the query MBR). The cell in which the query $q'$ exists can be specified, and cells around it can be searched. Thus, the search can be performed efficiently. The bound is represented by a dotted-line circle in the Figure \ref{fig:solution-grid}, and only the cells within the dotted-line circle need to be searched. In ANNH, the starting point of the cell searched in the case of multiple queries is the centroid of the query group. Algorithm \ref{alg:grid} shows a pseudo-code of the grid-index-based method. Likely, the bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). We create the clusters using the points nearest to $Q$ in the cells (Line 7-9). The clusters are created from the points in these cells and the corresponding $\Delta(.)$ are calculated. The current best solution and the bound are updated the bound is better than the current one (Line 10-12). 
+We notice that in the proposed point-base and group-base solutions, the most time-consuming task is to find the kNN points for a specific point (Line 5 in Algorithm \ref{alg:point} and Line 14 in Algorithm \ref{alg:mbr}). This can be avoided by reducing the number of clusters created by filtering. It has also been reported that, in NN search filtering, if a search is performed near a query point, the filtering bound is reduced and the amount of filtering is increased \cite{BNNH}. From this, the data set is arranged on the grid in the two-dimensional space, as in the previous studies \cite{BNNH,weber1998quantitative,mouratidis2006continuous,yu2005monitoring,mouratidis2005conceptual,xiong2005sea}. Figure \ref{fig:solution-grid} shows an example where there is one query point (or the center of the query MBR). The cell in which the query $q'$ exists can be specified, and cells around it can be searched. Thus, the search can be performed efficiently. The bound is represented by a dotted-line circle in the Figure \ref{fig:solution-grid}, and only the cells within the dotted-line circle need to be searched. In ANNH, the starting point of the cell searched in the case of multiple queries is the centroid of the query group. Algorithm \ref{alg:grid} shows a pseudo-code of the grid-index-based method. The bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). We create the clusters using the points nearest to $Q$ in the cells (Line 7-9). The clusters are created from the points in these cells and the corresponding $\Delta(.)$ are calculated. The current best solution and the bound are updated the bound is better than the current one (Line 10-12). 
 
 \begin{figure}
 \includegraphics[width=\textwidth]{images/solution-grid.pdf}
@@ -360,7 +361,7 @@ We notice that in the proposed point-base and group-base solutions, the most tim
 \STATE $bound \xleftarrow[]{} $calculate the filter condition with $\Delta(C,Q)$
 \STATE $nextCells \xleftarrow[]{} $ get surround cells of $Q$
 \WHILE{nextCells locate in $bound$}
-\STATE $pNext \xleftarrow[]{}$ retrieve nearest point to $Q$ from $nexCells$
+\STATE $pNext \xleftarrow[]{}$ retrieve nearest point to $Q$ from $nextCells$
 \STATE $pSet \xleftarrow[]{} pNext$ and its $k-1$ nearest points
 \STATE $C_t \xleftarrow{}$ create Cluster with $pSet$
 \IF{$\Delta(C_t,Q)<\Delta(C,Q)$}
@@ -368,6 +369,62 @@ We notice that in the proposed point-base and group-base solutions, the most tim
 \STATE update $bound$ with $\Delta(C_t,Q)$
 \ENDIF
 \STATE $nextCells \xleftarrow[]{} $ the next round of cells
+\ENDWHILE
+\RETURN $C$
+\end{algorithmic}
+\end{algorithm}
+
+\section{QuadTree-based solution}
+We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, useless searches will occur. To solve this problem, we introduce QuadTree, which has been shown by Shin, et al. to be effective in NN problems, and we propose a search method for QuadTree to solve the ANNH queries efficiently.
+
+Figures \ref{fig:solution-quadTree2} shows an example of our proposed QuadTree. In this case, the threshold is 2, the red dot is the center of gravity of the query, the black dot is the dataset, the dotted line is the grid, and the blue line is the boundary of the nodes in the QuadTree. We use grids as an adjunct to QuadTree, and a grid has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is_visited$, which indicates whether the node has been explored or not.
+
+Algorithm \ref{alg:quadtree} shows a pseudo-code of the QuadTree-based method. The bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). If there are points in the visited cell, the point closest to the centroid of the query in the cell is used as pNext, otherwise, the point closest to the centroid of the query in node to which the cell belongs is used as pNext (Line 7-12). We create the clusters using pNext from the previous step and calculate $\Delta(.)$. If $\Delta(.)$ value is better than the current best cluster, update the best cluster and the bound. (Line 13-17). Then, set the $is_visited$ flag of the visited node to true (Line 18). We repeat this steps for every cell in the non-visited node in the bound (Line 19).
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{images/solution-QuadTree1.pdf}
+        \caption{An example of Grid-index-based solution that occur unnecessary search} \label{fig:solution-quadTree1}
+    \end{center}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{images/solution-QuadTree2.pdf}
+        \caption{QuadTree-based solution} \label{fig:solution-quadTree2}
+    \end{center}
+\end{figure}
+
+\begin{algorithm}                      
+\caption{QuadTree-based solution}         
+\label{alg:quadtree}
+\begin{algorithmic}[1]                  
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\REQUIRE $P,Q,k,\alpha, \beta$
+\ENSURE $C$
+\STATE $p_a \xleftarrow[]{}$ the nearest point to $Q$ from $P$.
+\STATE $pSet \xleftarrow{} p_a$ and its $k-1$ nearest points
+\STATE $C \xleftarrow[]{}$ create Cluster with pSet
+\STATE $bound \xleftarrow[]{} $calculate the filter condition with $\Delta(C,Q)$
+\STATE $nextCells \xleftarrow[]{} $ get surround cells of $Q$
+\WHILE{nextCells locate in $bound$}
+\FOR{\textbf{each} $cell \in nextCells$}
+\STATE $node \xleftarrow[]{}$ the node where $cell$ is located
+\IF{$cell$ has points}
+\STATE $pNext \xleftarrow[]{}$ retrieve nearest point to $Q$ from $cell$
+\ELSE
+\STATE $pNext \xleftarrow[]{}$ retrieve nearest point to $Q$ from $node$
+\ENDIF
+\STATE $pSet \xleftarrow[]{} pNext$ and its $k-1$ nearest points
+\STATE $C_t \xleftarrow{}$ create Cluster with $pSet$
+\IF{$\Delta(C_t,Q)<\Delta(C,Q)$}
+\STATE $C \xleftarrow{} C_t$
+\STATE update $bound$ with $\Delta(C_t,Q)$
+\ENDIF
+\STATE $node$'s is\_visited $\xleftarrow[]{}$ $true$
+\ENDFOR
+\STATE $nextCells \xleftarrow[]{} $ cells located in non-visited nodes arround the query
 \ENDWHILE
 \RETURN $C$
 \end{algorithmic}
@@ -474,6 +531,24 @@ The result of changing the data size is shown in Figure \ref{fig:sum-dataSize} a
     \end{center}
     \caption{$f=max$, UN, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
     \label{fig:max-dataSize}
+\end{figure}
+
+The result of changing the grid size is shown in Figure \ref{fig:sum-gridSize} and Figure \ref{fig:max-gridSize}. For both aggregate distances SUM and MAX, QuadTree is faster than Grid when the grid size of QuadTree is 256 and 512. It is assumed that when the size of the QuadTree's base grid is appropriate for the distribution of the dataset, the points are properly placed on the nodes and the search is fast.
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-GridSize.pdf}
+    \end{center}
+    \caption{$f=sum$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \label{fig:sum-gridSize}
+\end{figure}
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-GridSize.pdf}
+    \end{center}
+    \caption{$f=max$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \label{fig:max-gridSize}
 \end{figure}
 
 \chapter{Conclusion and future work}
