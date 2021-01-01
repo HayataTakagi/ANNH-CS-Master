@@ -375,7 +375,7 @@ We notice that in the proposed point-base and group-base solutions, the most tim
 \end{algorithm}
 
 \section{QuadTree-based solution}
-We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, useless searches will occur. To solve this problem, we introduce QuadTree, which has been shown by Shin, et al. to be effective in NN problems, and we propose a search method for QuadTree to solve the ANNH queries efficiently.
+We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, useless searches will occur. To solve this problem, we introduce QuadTree \cite{finkel1974quad}, which has been shown to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for QuadTree to solve the ANNH queries efficiently.
 
 Figures \ref{fig:solution-quadTree2} shows an example of our proposed QuadTree. In this case, the threshold is 2, the red dot is the center of gravity of the query, the black dot is the dataset, the dotted line is the grid, and the blue line is the boundary of the nodes in the QuadTree. We use grids as an adjunct to QuadTree, and a grid has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is_visited$, which indicates whether the node has been explored or not.
 
@@ -447,17 +447,17 @@ The result of changing the query size using NE dataset is shown in Figures \ref{
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/NE-SUM-Q.png}
+        \includegraphics[width=0.8\textwidth]{src/images/NE-SUM-Q.pdf}
     \end{center}
-    \caption{$f=sum$, NE, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 123,593, k = 50, n = $128^2$}
+    \caption{Running time versus query size.(Dataset: NE, Aggregation distance: SUM)}
     \label{fig:sum-querySize}
 \end{figure}
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/NE-MAX-Q.png}
+        \includegraphics[width=0.8\textwidth]{src/images/NE-MAX-Q.pdf}
     \end{center}
-    \caption{$f=max$, NE, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 123,593, k = 50, n = $128^2$}
+    \caption{Running time versus query size.(Dataset: NE, Aggregation distance: MAX)}
     \label{fig:max-querySize}
 \end{figure}
 
@@ -465,17 +465,17 @@ The result of changing the query size using CAS dataset is shown in Figures \ref
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-Q.png}
+        \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-Q.pdf}
     \end{center}
-    \caption{$f=sum$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 196,902, k = 50, n = $128^2$}
+    \caption{Running time versus query size.(Dataset: CAS, Aggregation distance: SUM)}
     \label{fig:sum-querySize-CAS}
 \end{figure}
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/CAS-MAX-Q.png}
+        \includegraphics[width=0.8\textwidth]{src/images/CAS-MAX-Q.pdf}
     \end{center}
-    \caption{$f=max$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 196,902, k = 50, n = $128^2$}
+    \caption{Running time versus query size.(Dataset: CAS, Aggregation distance: MAX)}
     \label{fig:max-querySize-CAS}
 \end{figure}
 
@@ -483,17 +483,17 @@ The result of changing the cluster size is shown in Figures \ref{fig:sum-cluster
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/NE-SUM-K.png}
+        \includegraphics[width=0.8\textwidth]{src/images/NE-SUM-K.pdf}
     \end{center}
-    \caption{$f=sum$, NE, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 123,593, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus cluster size.(Dataset: NE, Aggregation distance: SUM)}
     \label{fig:sum-clusterSize}
 \end{figure}
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/NE-MAX-K.png}
+        \includegraphics[width=0.8\textwidth]{src/images/NE-MAX-K.pdf}
     \end{center}
-    \caption{$f=max$, NE, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 123,593, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus cluster size.(Dataset: NE, Aggregation distance: MAX)}
     \label{fig:max-clusterSize}
 \end{figure}
 
@@ -501,17 +501,17 @@ The result of changing the cluster size using CAS dataset is shown in Figures \r
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-K.png}
+        \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-K.pdf}
     \end{center}
-    \caption{$f=sum$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 196,902, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus cluster size.(Dataset: CAS, Aggregation distance: SUM)}
     \label{fig:sum-clusterSize-CAS}
 \end{figure}
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/CAS-MAX-K.png}
+        \includegraphics[width=0.8\textwidth]{src/images/CAS-MAX-K.pdf}
     \end{center}
-    \caption{$f=max$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 , $\mid$P$\mid$ = 196,902, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus cluster size.(Dataset: CAS, Aggregation distance: MAX)}
     \label{fig:max-clusterSize-CAS}
 \end{figure}
 
@@ -519,17 +519,17 @@ The result of changing the data size is shown in Figure \ref{fig:sum-dataSize} a
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/UN-SUM.png}
+        \includegraphics[width=0.8\textwidth]{src/images/UN-SUM.pdf}
     \end{center}
-    \caption{$f=sum$, UN, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus dataset size.(Dataset: UN, Aggregation distance: SUM)}
     \label{fig:sum-dataSize}
 \end{figure}
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=0.8\textwidth]{src/images/UN-MAX.png}
+        \includegraphics[width=0.8\textwidth]{src/images/UN-MAX.pdf}
     \end{center}
-    \caption{$f=max$, UN, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus dataset size.(Dataset: UN, Aggregation distance: MAX)}
     \label{fig:max-dataSize}
 \end{figure}
 
@@ -539,7 +539,7 @@ The result of changing the grid size is shown in Figure \ref{fig:sum-gridSize} a
     \begin{center}
         \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-GridSize.pdf}
     \end{center}
-    \caption{$f=sum$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus grid size.(Dataset: CAS, Aggregation distance: SUM)}
     \label{fig:sum-gridSize}
 \end{figure}
 
@@ -547,7 +547,7 @@ The result of changing the grid size is shown in Figure \ref{fig:sum-gridSize} a
     \begin{center}
         \includegraphics[width=0.8\textwidth]{src/images/CAS-SUM-GridSize.pdf}
     \end{center}
-    \caption{$f=max$, CAS, $\alpha$ = 0.5 , $\beta$ = 0.5 ,k = 50, $\mid$Q$\mid$ = 5, n = $128^2$}
+    \caption{Running time versus grid size.(Dataset: CAS, Aggregation distance: MAX)}
     \label{fig:max-gridSize}
 \end{figure}
 
