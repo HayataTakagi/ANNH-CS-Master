@@ -374,12 +374,12 @@ We notice that in the proposed point-base and group-base solutions, the most tim
 \end{algorithmic}
 \end{algorithm}
 
-\section{QuadTree-based solution}
-We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, useless searches will occur. To solve this problem, we introduce QuadTree \cite{finkel1974quad}, which has been shown to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for QuadTree to solve the ANNH queries efficiently.
+\section{Quadtree-based solution}
+We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, useless searches will occur. To solve this problem, we introduce quadtree \cite{finkel1974quad}, which has been shown to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for quadtree to solve the ANNH queries efficiently.
 
-Figures \ref{fig:solution-quadTree2} shows an example of our proposed QuadTree. In this case, the threshold is 2, the red dot is the center of gravity of the query, the black dot is the dataset, the dotted line is the grid, and the blue line is the boundary of the nodes in the QuadTree. We use grids as an adjunct to QuadTree, and a grid has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is_visited$, which indicates whether the node has been explored or not.
+Figures \ref{fig:solution-quadTree2} shows an example of our proposed quadtree. In this case, the threshold is 2, the red dot is the center of gravity of the query, the black dot is the dataset, the dotted line is the grid, and the blue line is the boundary of the nodes in the quadtree. We use grids as an adjunct to quadtree, and a grid has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is_visited$, which indicates whether the node has been explored or not.
 
-Algorithm \ref{alg:quadtree} shows a pseudo-code of the QuadTree-based method. The bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). If there are points in the visited cell, the point closest to the centroid of the query in the cell is used as pNext, otherwise, the point closest to the centroid of the query in node to which the cell belongs is used as pNext (Line 7-12). We create the clusters using pNext from the previous step and calculate $\Delta(.)$. If $\Delta(.)$ value is better than the current best cluster, update the best cluster and the bound. (Line 13-17). Then, set the $is_visited$ flag of the visited node to true (Line 18). We repeat this steps for every cell in the non-visited node in the bound (Line 19).
+Algorithm \ref{alg:quadtree} shows a pseudo-code of the quadtree-based method. The bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). If there are points in the visited cell, the point closest to the centroid of the query in the cell is used as pNext, otherwise, the point closest to the centroid of the query in node to which the cell belongs is used as pNext (Line 7-12). We create the clusters using pNext from the previous step and calculate $\Delta(.)$. If $\Delta(.)$ value is better than the current best cluster, update the best cluster and the bound. (Line 13-17). Then, set the $is_visited$ flag of the visited node to true (Line 18). We repeat this steps for every cell in the non-visited node in the bound (Line 19).
 
 \begin{figure}
     \begin{center}
@@ -391,12 +391,12 @@ Algorithm \ref{alg:quadtree} shows a pseudo-code of the QuadTree-based method. T
 \begin{figure}
     \begin{center}
         \includegraphics[width=0.6\textwidth]{images/solution-QuadTree2.pdf}
-        \caption{QuadTree-based solution} \label{fig:solution-quadTree2}
+        \caption{Quadtree-based solution} \label{fig:solution-quadTree2}
     \end{center}
 \end{figure}
 
 \begin{algorithm}                      
-\caption{QuadTree-based solution}         
+\caption{Quadtree-based solution}         
 \label{alg:quadtree}
 \begin{algorithmic}[1]                  
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
@@ -439,11 +439,12 @@ We conducted a sufficient amount of experiments to verify the efficiency of our 
 We performed experiments using geographic datasets and synthetic data sets. The geographic datasets are NE (123,593 points) and CAS (196,902 points) obtained from the US Census TIGER Project \cite{chorochronos}. For the synthetic data, a data set (10K - 100K points) based on uniform distribution is created and used.
 
 \section{Parameters}
-Query point is randomly selected from a dataset. The default result size $k$ is 50 and parameter $\alpha$ and $\beta$ are 0.5. The default number of cells in a grid is 128. All results are reported as the average processing time over 10 times conducting ANNH queries.
+Query point is randomly selected from a dataset. The default result size $k$ is 50 and parameter $\alpha$ and $\beta$ are 0.5. The grid size for grid-index-based solution is 128, and the default grid size for the quadtree-based solution is 512. All results are reported as the sum processing time 100 times conducting ANNH queries. We set the quadtree threshold to 20 because preliminary experiments showed that it has no effect on the speed and the result cluster.
 
 \section{Experimental results}
 
-The result of changing the query size using NE dataset is shown in Figures \ref{fig:sum-querySize} and  \ref{fig:max-querySize}. The grid-index-based method is the fastest for the sum and the maximum aggregate distances. This is because the search is performed from the vicinity of queries in the grid-index-based method, therefore the bound used for filtering is appropriately set early and the amount of filtering is large. In the grid-index-based method for the sum aggregate distance, the result becomes faster as the query size becomes larger. This is because the larger the number of queries, the more appropriately bound is set and the larger the amount of filtering is. When the aggregation distance is set to the maximum, the method using the point base and the R-tree is faster than the case of the sum aggregation distance. This is because the value to be compared with the bound used for filtering is the average of the distance from queries when the aggregate distance is the sum, but the maximum value from queries occurs when the aggregate distance is maximum. It is considered that the filtering amount is large.
+The result of changing the query size using NE dataset is shown in Figures \ref{fig:sum-querySize} and  \ref{fig:max-querySize}. The quadtree-based method is the fastest for the sum and the maximum aggregate distances, followed by the grid-index-based method. This is because the search is performed from the vicinity of queries in the grid-index-based method and the quadtree-based method, therefore the bound used for filtering is appropriately set early and the amount of filtering is large. In the grid-index-based method for the sum aggregate distance, the result becomes faster as the query size becomes larger. This is because the larger the number of queries, the more appropriately bound is set and the larger the amount of filtering is.
+The quadtree-based method was about 10 times faster than the grid-index-based method. This is because the grid divides the dataset uniformly, which causes unnecessary searches for cells which have no points, while the quadtree has no node which has no points because it determines the size of a node based on the density of points in the node, which reduces unnecessary searches and speeds up.
 
 \begin{figure}
     \begin{center}
@@ -461,7 +462,7 @@ The result of changing the query size using NE dataset is shown in Figures \ref{
     \label{fig:max-querySize}
 \end{figure}
 
-The result of changing the query size using CAS dataset is shown in Figures \ref{fig:sum-querySize-CAS} and  \ref{fig:max-querySize-CAS}. The results in CAS are same trend as the NE results, but for the maximum aggregate distance in Figure \ref{fig:max-querySize-CAS}, point-based result and MBR-based result are comparable. This is because the amount filtered out by MBR varies with the density of the dataset.
+The result of changing the query size using CAS dataset is shown in Figures \ref{fig:sum-querySize-CAS} and  \ref{fig:max-querySize-CAS}. The results in CAS are same trend as the NE results.
 
 \begin{figure}
     \begin{center}
@@ -479,7 +480,7 @@ The result of changing the query size using CAS dataset is shown in Figures \ref
     \label{fig:max-querySize-CAS}
 \end{figure}
 
-The result of changing the cluster size is shown in Figures \ref{fig:sum-clusterSize} and \ref{fig:max-clusterSize}. The grid-index-based method is the fastest for both aggregation distances.
+The result of changing the cluster size is shown in Figures \ref{fig:sum-clusterSize} and \ref{fig:max-clusterSize}. The quadtree-based method is the fastest for both aggregation distances.
 
 \begin{figure}
     \begin{center}
@@ -515,7 +516,8 @@ The result of changing the cluster size using CAS dataset is shown in Figures \r
     \label{fig:max-clusterSize-CAS}
 \end{figure}
 
-The result of changing the data size is shown in Figure \ref{fig:sum-dataSize} and Figure \ref{fig:max-dataSize}. The grid-index-based approach is the fastest. It can be observed that the processing time increases with the data size in all three methods. The result of the grid-index-based are outstanding fast compared to the other methods. This is because the dataset is uniformly distributed, and there is a best cluster near the query.
+The result of changing the data size is shown in Figure \ref{fig:sum-dataSize} and Figure \ref{fig:max-dataSize}. The processing time in grid-index-based method had a slower increasing trend than it in point-based method and mbr-based method. This is because the dataset is uniformly distributed, and there is a best cluster near the query.
+For the aggregate distance SUM, the processing time in the quadtree-based method became faster as the data size increased within the range of the data size where we experimented, and the quadtree-based method became the fastest with a data size of 50,000. This does not mean that it becomes faster as the data size increases, but rather that the appropriate grid size for a quadtree depends on the data size, and for the default grid size for a quadtree of 512, points were placed on nodes more appropriately when the data size was 100,000 rather than 10,000. The same trend was observed for the aggregation distance MAX, where a data size of 100,000 was more appropriate than 10,000 for the grid size of 512 for a quadtree.
 
 \begin{figure}
     \begin{center}
@@ -533,7 +535,7 @@ The result of changing the data size is shown in Figure \ref{fig:sum-dataSize} a
     \label{fig:max-dataSize}
 \end{figure}
 
-The result of changing the grid size is shown in Figure \ref{fig:sum-gridSize} and Figure \ref{fig:max-gridSize}. For both aggregate distances SUM and MAX, QuadTree is faster than Grid when the grid size of QuadTree is 256 and 512. It is assumed that when the size of the QuadTree's base grid is appropriate for the distribution of the dataset, the points are properly placed on the nodes and the search is fast.
+The result of changing the grid size is shown in Figure \ref{fig:sum-gridSize} and Figure \ref{fig:max-gridSize}. For both aggregate distances SUM and MAX, the quadtree-based method is faster than grid-index-based method when the grid size of quadtree is 256 and 512. It is assumed that when the size of the base grid for a quadtree was appropriate for the distribution of the dataset, the points are properly placed on the nodes and the search is fast.
 
 \begin{figure}
     \begin{center}
@@ -554,7 +556,7 @@ The result of changing the grid size is shown in Figure \ref{fig:sum-gridSize} a
 \chapter{Conclusion and future work}
 \label{section:conclusion}
 
-Finding the nearest cluster is an important issue in query processing and data mining. In previous research, it was not possible to search the nearest cluster of multiple queries. In this paper, the nearest neighbor cluster search of multiple queries was realized by defining the aggregation distance. We proposed three methods to search clusters, using point-based, MBR-based, and grid-index-based approaches. Experiments using both real data and synthetic data revealed that the method using a grid at all aggregation distances was the most efficient.
+Finding the nearest cluster is an important issue in query processing and data mining. In previous research, it was not possible to search the nearest cluster of multiple queries. In this paper, the nearest neighbor cluster search of multiple queries was realized by defining the aggregation distance. We proposed four methods to search clusters, using point-based, MBR-based, grid-index-based and quadtree-based approaches. Experiments using both real data and synthetic data revealed that the method using a quadtree and a grid at all aggregation distances was the most efficient.
 
 However, one drawback is that performance tends to decrease depending on the value of the smoothing parameter. Hence, our future work will now concentrate on solving this challenge.
 
