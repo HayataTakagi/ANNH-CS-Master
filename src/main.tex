@@ -152,7 +152,7 @@ The notaions used in this paper are shown in Table \ref{tab:var}. Given a query 
       $q, Q$ & query point, query group \\ \hline
       $C, V_C$ & cluster, variance of cluster \\ \hline
       $O_C$ & cluster centroid \\ \hline
-      $dist(p,q)$ & euclidean distance between $p$ to $q$ \\ \hline
+      $dist(p,q)$ & euclidean distance between $p$ and $q$ \\ \hline
       $f(p, C)$  & aggregation distance between point $p$ and cluster $C$ \\ \hline
       $\alpha$, $\beta$ & user preference parameter \\ \hline
       $k$ & response cluster size \\ \hline
@@ -185,7 +185,7 @@ By changing the values of the smoothing parameters $\alpha$ and $\beta$ of Equat
 
 \begin{figure}
 \includegraphics[width=\textwidth]{images/example-delta.png}
-\caption{Relationship between cluster distance and density} \label{fig:example-delta}
+\caption{An example of cluster distance and density} \label{fig:example-delta}
 \end{figure}
 
 
@@ -375,16 +375,16 @@ We notice that in the proposed point-base and group-base solutions, the most tim
 \end{algorithm}
 
 \section{Quadtree-based solution}
-We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, useless searches will occur. To solve this problem, we introduce quadtree \cite{finkel1974quad}, which has been shown to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for quadtree to solve the ANNH queries efficiently.
+We can now explore from the neighborhood of the query by grid, but grid cannot deal with the bias of the dataset because grid divide the dataset uniformly. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, meaningless searches will occur. To solve this problem, we introduce quadtree \cite{finkel1974quad}, which has been shown to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for quadtree to solve the ANNH queries efficiently.
 
-Figures \ref{fig:solution-quadTree2} shows an example of our proposed quadtree. In this case, the threshold is 2, the red dot is the center of gravity of the query, the black dot is the dataset, the dotted line is the grid, and the blue line is the boundary of the nodes in the quadtree. We use grids as an adjunct to quadtree, and a grid has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is_visited$, which indicates whether the node has been explored or not.
+Figures \ref{fig:solution-quadTree2} shows an example of our proposed quadtree. In this case, the threshold is 2, the star is the center of gravity of the query, the round dot is the dataset, the dotted line is the grid, and the bold line is the boundary of the nodes in the quadtree. We use grids as an adjunct to quadtree, and a grid has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is_visited$, which indicates whether the node has been explored or not.
 
 Algorithm \ref{alg:quadtree} shows a pseudo-code of the quadtree-based method. The bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). If there are points in the visited cell, the point closest to the centroid of the query in the cell is used as pNext, otherwise, the point closest to the centroid of the query in node to which the cell belongs is used as pNext (Line 7-12). We create the clusters using pNext from the previous step and calculate $\Delta(.)$. If $\Delta(.)$ value is better than the current best cluster, update the best cluster and the bound. (Line 13-17). Then, set the $is_visited$ flag of the visited node to true (Line 18). We repeat this steps for every cell in the non-visited node in the bound (Line 19).
 
 \begin{figure}
     \begin{center}
         \includegraphics[width=0.6\textwidth]{images/solution-QuadTree1.pdf}
-        \caption{An example of Grid-index-based solution that occur unnecessary search} \label{fig:solution-quadTree1}
+        \caption{An example of Grid-index-based solution taking unnecessary search} \label{fig:solution-quadTree1}
     \end{center}
 \end{figure}
 
@@ -439,11 +439,11 @@ We conducted a sufficient amount of experiments to verify the efficiency of our 
 We performed experiments using geographic datasets and synthetic data sets. The geographic datasets are NE (123,593 points) and CAS (196,902 points) obtained from the US Census TIGER Project \cite{chorochronos}. For the synthetic data, a data set (10K - 100K points) based on uniform distribution is created and used.
 
 \section{Parameters}
-Query point is randomly selected from a dataset. The default result size $k$ is 50 and parameter $\alpha$ and $\beta$ are 0.5. The grid size for grid-index-based solution is 128, and the default grid size for the quadtree-based solution is 512. All results are reported as the sum processing time 100 times conducting ANNH queries. We set the quadtree threshold to 20 because preliminary experiments showed that it has no effect on the speed and the result cluster.
+Query points are randomly selected from a dataset. The default result size $k$ is 50 and parameter $\alpha$ and $\beta$ are both set to 0.5. The grid size for grid-index-based solution is 128, and the default grid size for the quadtree-based solution is 512. All results are reported as the sum processing time 100 times conducting ANNH queries. We set the quadtree threshold to 20 because preliminary experiments showed that it does not affect the computation time and the result cluster.
 
 \section{Experimental results}
 
-The result of changing the query size using NE dataset is shown in Figures \ref{fig:sum-querySize} and  \ref{fig:max-querySize}. The quadtree-based method is the fastest for the sum and the maximum aggregate distances, followed by the grid-index-based method. This is because the search is performed from the vicinity of queries in the grid-index-based method and the quadtree-based method, therefore the bound used for filtering is appropriately set early and the amount of filtering is large. In the grid-index-based method for the sum aggregate distance, the result becomes faster as the query size becomes larger. This is because the larger the number of queries, the more appropriately bound is set and the larger the amount of filtering is.
+The results of changing the query size using NE dataset are shown in Figures \ref{fig:sum-querySize} and  \ref{fig:max-querySize}. The quadtree-based method is the fastest for the sum and the maximum aggregate distances, followed by the grid-index-based method. This is because the search is performed from the vicinity of queries in the grid-index-based method and the quadtree-based method, therefore the bound used for filtering is appropriately set early and the amount of filtering is large. In the grid-index-based method for the sum aggregate distance, the result becomes faster as the query size becomes larger. This is because the larger the number of queries, the more appropriately bound is set and the larger the amount of filtering is.
 The quadtree-based method was about 10 times faster than the grid-index-based method. This is because the grid divides the dataset uniformly, which causes unnecessary searches for cells which have no points, while the quadtree has no node which has no points because it determines the size of a node based on the density of points in the node, which reduces unnecessary searches and speeds up.
 
 \begin{figure}
@@ -564,6 +564,7 @@ However, one drawback is that performance tends to decrease depending on the val
 \chapter*{Acknowledgements}
 This work was supported by JSPS KAKENHI Grant Number JP19K12114.
 
+\nocite{ANNH-FICC} % ANNH on FICC
 \bibliographystyle{unsrt}
 \bibliography{main}
 
