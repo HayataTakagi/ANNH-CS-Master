@@ -74,7 +74,7 @@
 \end{center}
 \vspace{0.2in}
 
-Efficiency of finding nearest clusters is a principal factor in query processing and data mining, and this can be applied to location information services and services using point of interests (POI). However, no research is currently aimed at finding the nearest cluster of multiple query points. In this paper, we propose Aggregate Nearest Neighborhood Query (ANNH) for searching the nearest cluster of multiple queries with aggregation distance between multiple query points and clusters. Further, one disadvantage is that previous research represents clusters only by circles, and this does not address problems such as biased data points remaining in the cluster. Alternatively, we present a solution to this challenge in ANNH by evaluating cluster density by variance.
+Efficiency of finding nearest clusters is a principal factor in query processing and data mining, and this can be applied to location information services and services using point of interests (POI). However, no research is currently aimed at finding the nearest cluster of multiple query points. In this thesis, we propose Aggregate Nearest Neighborhood Query (ANNH) for searching the nearest cluster of multiple queries with aggregation distance between multiple query points and clusters. Further, one disadvantage is that previous research represents clusters only by circles, and this does not address problems such as biased data points remaining in the cluster. Alternatively, we present a solution to this challenge in ANNH by evaluating cluster density by variance.
 
 %%%%%
 \par
@@ -91,7 +91,7 @@ Efficiency of finding nearest clusters is a principal factor in query processing
 
 
 \chapter{Introduction}
-Nearest Neighborhood query in the spatial database is an important problem in a variety of applications such as pattern recognition, POI (Point of Interest), and LBS (Location-based Services), and other Data Mining applications\cite{adeniyi2016automated}. A wide variety of topics involving nearest neighbor search have been studied, and more recently the Balanced Nearest Neighborhood Query (BNNH)\cite{BNNH} has been proposed. Compared to traditional nearest neighbor search, which finds the point closest to a given query point, BNNH finds the nearest cluster as a response. That is, BNNH query is a variation of the nearest neighbor query for grouped points. On the other hand, aggregate Nearest Neighbor Queries (ANN)\cite{ANN} receive multiple query points and return the nearest point to the query group based on a certain aggregate distance function. In these studies, a key problem is that it was not possible to search the nearest cluster for multiple queries. Based on this challenge, this paper concentrates on searching for the nearest cluster for multiple query points.
+Nearest Neighborhood query in the spatial database is an important problem in a variety of applications such as pattern recognition, POI (Point of Interest), and LBS (Location-based Services), and other Data Mining applications\cite{adeniyi2016automated}. A wide variety of topics involving nearest neighbor search have been studied, and more recently the Balanced Nearest Neighborhood Query (BNNH)\cite{BNNH} has been proposed. Compared to traditional nearest neighbor search, which finds the point closest to a given query point, BNNH finds the nearest cluster as a response. That is, BNNH query is a variation of the nearest neighbor query for grouped points. On the other hand, aggregate Nearest Neighbor Queries (ANN)\cite{ANN} receive multiple query points and return the nearest point to the query group based on a certain aggregate distance function. In these studies, a key problem is that it was not possible to search the nearest cluster for multiple queries. Based on this challenge, this thesis concentrates on searching for the nearest cluster for multiple query points.
 
 The following is an application example of this research. Fig. \ref{fig:example-sum} shows an example of searching for a restaurant. Suppose one travels from a starting place to an end place, and he/she wants to visit several restaurants with the shortest travel distance when he/she decides on the area to drop in. In this case, the departure point and the end point become the queries, and the restaurants are the data set. In the proposed method, the purpose is to find a dense data subset from which the total distance of the queries is minimum.
 
@@ -106,14 +106,14 @@ Although the density of cluster is almost the same as that of the cluster in Fig
 To solve the above problem like in the example, we propose a new query processing problem of finding nearest neighborhood, named Aggregate Nearest Neighborhood Queries (ANNH).
 ANNH searches for data points and finds clusters based on the proposed algorithm. ANNH calculates cluster scores using the evaluation function and finds a cluster which is denser and closer to the queries. ANNH evaluates the distance between multiple queries and a cluster using an aggregate distance function, and the cluster density using variance. The proposed ANNH is formally defined in Section \ref{section:annh}.
 
-Major contributions of this paper are as follows.
+Major contributions of this thesis are as follows.
 \begin{itemize}
     \item  To define a general and realistic neighborhood query problem for multiple queries considering different neighborhood scale, we propose and formalize the Aggregated Nearest Neighborhood Query (ANNH). ANNH uses smoothing parameters and aggregated distance functions to find a nearest cluster for multiple queries, responding to different user preferences between aggregate distance and scale.
   \item ANNH makes it possible to find more exact clusters by evaluating the cluster density by variance without fixing the cluster shape.
   \item To solve ANNH efficiently, we propose four methods: Point-based solution, Minimum bounding rectangle-based (MBR-based) solution, Grid-index-based solution and Quadtree-based solution. MBR-based solution utilizes the R-tree\cite{R-tree} structure to index points, and uses a best-distance methodology to filter unnecessary points. Grid-index-based solution is based on the grid structure\cite{BNNH}, which enables to retrieve k nearest neighbor points directly hence has better performance on ANNH query. Quadtree-based solution combines Grid-based solution with the quadtree structure\cite{finkel1974quad} to make it even faster.
 \end{itemize}
 
-The rest of this paper is organized as follows. In Section \ref{section:related-works}, we introduce some related works. Section \ref{section:annh} describes the definition of Aggregated Nearest Neighbor Query (ANNH) and the proposed methods. The experimental results are discussed in Section \ref{section:experiments}. Section \ref{section:conclusion} concludes the paper.
+The rest of this thesis is organized as follows. In Section \ref{section:related-works}, we introduce some related works. Section \ref{section:annh} describes the definition of Aggregated Nearest Neighbor Query (ANNH) and the proposed methods. The experimental results are discussed in Section \ref{section:experiments}. Section \ref{section:conclusion} concludes the thesis.
 
 \begin{figure}
 \includegraphics[width=\textwidth]{images/example-max.png}
@@ -141,7 +141,7 @@ always find the circle containing $k$ points. The BNNH \cite{BNNH} extends NNH s
 ANN \cite {ANN} takes multiple query points as input and outputs a single point. BNNH \cite{BNNH} takes a single point as input and clusters as output. ANNH realizes a combination of multiple queries for input and a cluster of nearest neighbors for query, which is a combination that cannot be searched in these previous methods.
 In BNNH, a cluster is defined as a circle, and the density was defined as the radius of the circle. This requires a calculation to form a circle and presents a problem in that it is not possible to detect bias in the data inside a cluster. ANNH does not limit the shape of a cluster to a circle, evaluates the degree of congestion based on the variance within the cluster, thereby achieving a reduction in the amount of computation and searching for a denser cluster.
 
-The notaions used in this paper are shown in Table \ref{tab:var}. Given a query $Q$, a cluster size $k$, and balancing parameters $\alpha$ and $\beta$, ANNH search is to find the cluster closest to the given query. ANNH are formally defined as follows:
+The notations used in this thesis are shown in Table \ref{tab:var}. Given a query $Q$, a cluster size $k$, and balancing parameters $\alpha$ and $\beta$, ANNH search is to find the cluster closest to the given query. ANNH are formally defined as follows:
 
 \begin{table}
   \begin{center}
@@ -490,12 +490,13 @@ The result of changing the grid size is shown in Figure \ref{fig:gridSize}. For 
 \chapter{Conclusion and future work}
 \label{section:conclusion}
 
-Finding the nearest cluster is an important issue in query processing and data mining. In the previous research, it was not possible to search the nearest cluster of multiple queries. In this paper, the nearest neighbor cluster search of multiple queries was realized by defining the aggregation distance. We proposed four methods to search clusters, using point-based, MBR-based, grid-index-based and quadtree-based approaches. Experiments using both real data and synthetic data revealed that the method using a quadtree and a grid at all aggregation distances was the most efficient.
+Finding the nearest cluster is an important issue in query processing and data mining. In the previous research, it was not possible to search the nearest cluster of multiple queries. In this thesis, the nearest neighbor cluster search of multiple queries was realized by defining the aggregation distance. We proposed four methods to search clusters, using point-based, MBR-based, grid-index-based and quadtree-based approaches. Experiments using both real data and synthetic data revealed that the method using a quadtree and a grid at all aggregation distances was the most efficient.
 
 However, one drawback is that performance tends to decrease depending on the value of the smoothing parameter. Hence, our future work will concentrate on solving this problem.
 
 
 \chapter*{Acknowledgements}
+I would like to thank Dr. Kitagawa, an advisor, for this research, Dr. Chen and Dr. Furuse. I also gratefully acknowledge the work of past and present members of my laboratory.
 This work was supported by JSPS KAKENHI Grant Number JP19K12114.
 
 \nocite{ANNH-FICC} % ANNH on FICC
