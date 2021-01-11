@@ -446,10 +446,11 @@ Query points are randomly selected from a dataset. The default result size $k$ i
 The results of changing the query size using NE dataset are shown in Figures \ref{fig:querySize} (a) and (b). The quadtree-based method is the fastest for the sum and the maximum aggregate distances, followed by the grid-index-based method. This is because the search is performed from the vicinity of queries in the grid-index-based method and the quadtree-based method, therefore the bound used for filtering is appropriately set early and the amount of filtering is large. In the grid-index-based method for the sum aggregate distance, the result becomes faster as the query size becomes larger. This is because the larger the number of queries, the more appropriately bound is set and the larger the amount of filtering is.
 The quadtree-based method was about 10 times faster than the grid-index-based method. This is because the grid divides the space at even intervals, which causes unnecessary searches for cells which have no points, while the quadtree has no node which has no points because it determines the size of a node based on the density of points in the node, which reduces unnecessary searches and speeds up.
 The result of changing the query size using CAS dataset is shown in Figures \ref{fig:querySize} (c) and (d). The results in CAS are the same trend as the NE results.
+The result of changing the cluster size using UN dataset is shown in Figures \ref{fig:querySize} (e) and (f). UN is a uniform distribution of points, and there is likely to be a cluster of answer around the centroid of the query. Therefor, the grid-index-based method and the quadtree-based method of UN are faster than the other datasets because they search from the centroid of the query.
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=\textwidth]{matplotlib/export/querysize.pdf}
+        \includegraphics[width=0.86\textwidth]{matplotlib/export/querysize.pdf}
     \end{center}
     \caption{Running time versus query size.}
     \label{fig:querySize}
@@ -457,21 +458,23 @@ The result of changing the query size using CAS dataset is shown in Figures \ref
 
 The result of changing the cluster size is shown in Figures \ref{fig:clusterSize} (a) and (b). The quadtree-based method is the fastest for both aggregation distances.
 The result of changing the cluster size using CAS dataset is shown in Figures \ref{fig:clusterSize} (c) and (d). The results in CAS are same trend as the NE results.
+The result of changing the cluster size using UN dataset is shown in Figures \ref{fig:clusterSize} (e) and (f). As in the experiment with query size, the results for the grid-based method and the quadtree-based method of UN are faster than the other datasets.
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=\textwidth]{matplotlib/export/clustersize.pdf}
+        \includegraphics[width=0.86\textwidth]{matplotlib/export/clustersize.pdf}
     \end{center}
     \caption{Running time versus cluster size.}
     \label{fig:clusterSize}
 \end{figure}
 
 The result of changing the data size is shown in Figure \ref{fig:dataSize}. The processing time in grid-index-based method had a slower increasing trend than that in point-based method and mbr-based method. This is because the dataset is uniformly distributed, and there is a best cluster near the query.
-For the aggregate distance SUM, the processing time in the quadtree-based method became faster as the data size increased within the range of the data size where we experimented, and the quadtree-based method became the fastest with a data size of 50,000. This does not mean that it becomes faster as the data size increases, but rather that the appropriate grid size for a quadtree depends on the data size, and for the default grid size for a quadtree of 512, points were placed on nodes more appropriately when the data size was 100,000 rather than 10,000. The same trend was observed for the aggregation distance MAX, where a data size of 100,000 was more appropriate than 10,000 for the grid size of 512 for a quadtree.
+For the aggregate distance SUM, the processing time in the quadtree-based method became faster as the data size increased within the range of the data size where we experimented, and the quadtree-based method became the fastest with a data size of 50,000 in the UN dataset / SUM aggregation distance. This does not mean that it becomes faster as the data size increases, but rather that the appropriate grid size for a quadtree depends on the data size, and for the default grid size for a quadtree of 512, points were placed on nodes more appropriately when the data size was 100,000 rather than 10,000. The same trend was observed for the aggregation distance MAX, where a data size of 100,000 was more appropriate than 10,000 for the grid size of 512 for a quadtree.
+Because of this, the data size of 75000 is faster than 100000 in the CAS dataset / MAX aggregation distance.
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=\textwidth]{matplotlib/export/datasize.pdf}
+        \includegraphics[width=0.86\textwidth]{matplotlib/export/datasize.pdf}
     \end{center}
     \caption{Running time versus dataset size.}
     \label{fig:dataSize}
