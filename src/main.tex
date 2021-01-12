@@ -36,7 +36,7 @@
 
 \usepackage{src/sie-jp-sjis}
 
-\title{Aggregate Nearest Neighborhood Queries In Euclidean Space}
+\title{Aggregate Nearest Neighborhood Queries in Euclidean Space}
 \author{Hayata Takagi\\ (Master's Program in Computer Science)}
 \degree{}
 \advisor{Advised by Hiroyuki Kitagawa}
@@ -74,7 +74,7 @@
 \end{center}
 \vspace{0.2in}
 
-Efficiency of finding nearest clusters is a principal factor in query processing and data mining, and this can be applied to location information services and services using point of interests (POI). However, no research is currently aimed at finding the nearest cluster of multiple query points. In this thesis, we propose Aggregate Nearest Neighborhood Query (ANNH) for searching the nearest cluster of multiple queries with aggregation distance between multiple query points and clusters. Further, one disadvantage is that previous research represents clusters only by circles, and this does not address problems such as biased data points remaining in the cluster. Alternatively, we present a solution to this challenge in ANNH by evaluating cluster density by variance.
+Efficiency of finding nearest clusters is a principal factor in query processing and data mining, and this can be applied to location information services and services using point of interests (POI). However, no research is currently aimed at finding the nearest cluster of multiple query points. In this thesis, we propose Aggregate Nearest Neighborhood Query (ANNH) for searching the nearest cluster of multiple queries with aggregation distance between multiple query points and clusters. Further, one disadvantage is that previous research on finding the nearest cluster of a single query point represents clusters only by circles, and this makes the cluster size increase when we deal with biased datasets. Alternatively, we present a solution to this challenge in ANNH by evaluating cluster density by variance.
 
 %%%%%
 \par
@@ -484,7 +484,7 @@ The result of changing the grid size is shown in Figure \ref{fig:gridSize}. For 
 
 \begin{figure}
     \begin{center}
-        \includegraphics[width=\textwidth]{matplotlib/export/gridsize.pdf}
+        \includegraphics[width=0.86\textwidth]{matplotlib/export/gridsize.pdf}
     \end{center}
     \caption{Running time versus grid size.}
     \label{fig:gridSize}
