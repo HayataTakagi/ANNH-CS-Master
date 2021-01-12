@@ -101,7 +101,7 @@ The following is an application example of this research. Fig. \ref{fig:example-
 \end{figure}
 
 Fig. \ref{fig:example-max} shows another example on determining a meeting place. Suppose the user wants to search for a place where plenty of activities are available and the members can gather easily. In this case, set of the locations of all users is the query, and the activity spots are the data set to be searched. The proposed method efficiently searches the cluster which the maximum distance from each user is less, and the density of activities is high. The cluster in Fig. \ref{fig:example-max2} does not satisfy the search request.
-Although the density of cluster is almost the same as that of the cluster in Fig. \ref{fig:example-max}, it is not suitable as a meeting place because the maximum distance distance between each member of the query and the cluster is larger than the maximum value of the cluster in Fig. \ref{fig:example-max}.
+Although the density of the cluster is almost the same as that of the cluster in Fig. \ref{fig:example-max}, it is not suitable as a meeting place because the maximum distance distance between each member of the query and the cluster is larger than the maximum value of the cluster in Fig. \ref{fig:example-max}.
 
 To solve the above problem like in the example, we propose a new query processing problem of finding nearest neighborhood, named Aggregate Nearest Neighborhood Queries (ANNH).
 ANNH searches for data points and finds clusters based on the proposed algorithm. ANNH calculates cluster scores using the evaluation function and finds a cluster which is denser and closer to the queries. ANNH evaluates the distance between multiple queries and a cluster using an aggregate distance function, and the cluster density using variance. The proposed ANNH is formally defined in Section \ref{section:annh}.
@@ -133,7 +133,7 @@ The rest of this thesis is organized as follows. In Section \ref{section:related
 In multiple fields including database management systems, data mining and information retrieval, a basic yet important problem is the (k) nearest neighbor query problem (NN, or kNN). Given a query point q and a point dataset $P$, NN returns the nearest point to $q$ from the dataset $P$. Research has been widely conducted focusing on solving the NN query with good performance, one of the most popular solutions proposed is R-tree based processing \cite{NN,cheung1998enhanced,hjaltason1999distance}. R-tree \cite{R-tree} is a spatial index that groups close points in space with the minimum bounding rectangle (MBR), and manages MBRs with a tree structure. Roussopoulos et al. \cite{NN} first proposed an R-tree based method for processing the NN query with geographic information systems (GISs). Hjaltason et al \cite{hjaltason1999distance} proposed a best-first method with R-tree to solve the NN query. The best-first method searches the nearest neighbor in best first manner. This maintains a priority queue that contains the MBRs of R-tree with the order of minimum distance to query point $q$. In our research, we also propose the solutions with the best-first method to solve the ANNH query.
 
 \section{Group version of nearest neighbor query.}
-As real-life applications are dissatisfied with only evaluating the relationship between single points like the conventional NN query, many variants of the NN query have been studied. Papadias et al. developed aggregate nearest neighbor query (ANN) \cite{ANN} to retrieve points with the smallest aggregate distance to multiple query points in metric space. ANN inputs a group of query points Q and aims to find a nearest single point that has the smallest aggregate distance to Q. Thus, although ANNH and ANN are similar in that they receive multiple queries, the difference is that ANNH explores clusters whereas ANN explores points. Deng et al. \cite{GNG} proposed a group nearest group query (GNG), which is a spatial query returning a group of points. In GNG, the response group is evaluated based on the distance from the query for each point, whereas in ANNH, a set of points is regarded as a cluster, and the cluster density is also included in the evaluation. Besides evaluating the similarity in terms of the Euclidean distance function, Dong et al, \cite{dong2017grid} proposed an aggregate reverse rank query which uses an inner product function to evaluating the similarity between a point and a group of points in the spatial algorithm. Nearest neighborhood search (NNH) \cite{NNH} extends the NN query and for query point q returns the nearest cluster which is a a circle with fixed radius $\rho$. Because the radius is fixed, it is impossible to
+As real-life applications are dissatisfied with only evaluating the relationship between single points like the conventional NN query, many variants of the NN query have been studied. Papadias et al. developed aggregate nearest neighbor query (ANN) \cite{ANN} to retrieve points with the smallest aggregate distance to multiple query points in metric space. ANN inputs a group of query points Q and aims to find a nearest single point that has the smallest aggregate distance to Q. Thus, although ANNH and ANN are similar in that they receive multiple queries, the difference is that ANNH explores clusters whereas ANN explores points. Deng et al. \cite{GNG} proposed a group nearest group query (GNG), which is a spatial query returning a group of points. In GNG, the response group is evaluated based on the distance from the query for each point, whereas in ANNH, a set of points is regarded as a cluster, and the cluster density is also included in the evaluation. Besides evaluating the similarity in terms of the Euclidean distance function, Dong et al. \cite{dong2017grid} proposed an aggregate reverse rank query which uses an inner product function to evaluating the similarity between a point and a group of points in the spatial algorithm. Nearest neighborhood search (NNH) \cite{NNH} extends the NN query and for query point q returns the nearest cluster which is a a circle with fixed radius $\rho$. Because the radius is fixed, it is impossible to
 always find the circle containing $k$ points. The BNNH \cite{BNNH} extends NNH so that the radius can be changed to guarantee $k$ points found, and the balance between the cluster size and the distance from the query point is considered using smooth parameters. While BNNH is given a single query point and judges clusters density by the radius of the circle, ANNH is given multiple query points and judges clusters density by the variance, so ANNH can find more dense clusters.
 
 \chapter{Aggregate Nearest Neighborhood Queries}
@@ -165,7 +165,7 @@ The notations used in this thesis are shown in Table \ref{tab:var}. Given a quer
 \end{table}
 
 \begin{definition}
-(Aggregate Nearest Neighborhood Queries, ANNH). Given a set of points P, a query group Q, a positive value $k$ and a user-defined smoothing parameter $\alpha$ and $\beta$. ANNH returns the neighborhood cluster C including k points, and C holds the minimum value of $\Delta(C, Q)$.
+(Aggregate Nearest Neighborhood Queries, ANNH). Given a set of points P, a query group Q, a positive value $k$ and user-defined smoothing parameters $\alpha$ and $\beta$. ANNH returns the neighborhood cluster C including k points, and C holds the minimum value of $\Delta(C, Q)$, where $\Delta(C, Q)$ is defined as Equation (\ref{equ:f-delta}).
 \end{definition}
 
 The neighborhood is defined as a cluster as follows.
@@ -191,7 +191,7 @@ By changing the values of the smoothing parameters $\alpha$ and $\beta$ of Equat
 
 \section{Aggregation distance}
 \label{subsection:aggregate-distance}
-With multiple queries, it is necessary to define the nearest neighbor between a query group $Q$ and a point $p$. In this study, \textbf{sum} and \textbf{maximum} are taken as the nearest indices.
+Given a set of query points $Q$, it is necessary to define the nearest neighbor between a query group $Q$ and a point $p$. In this study, \textbf{sum} and \textbf{maximum} are taken as the nearest indices.
 
 \section{Aggregate nearest neighborhood of sum.}
 The cluster that minimizes the total distance from each query to the cluster is defined as the nearest neighborhood. As in the example shown in Fig. \ref{fig:example-sum}, the user can solve the problem of minimizing the traveling distance by setting the route point as a query itself. The equation for calculating the sum aggregation distance between a point $p$ and a query $Q$ is as follows.
@@ -257,8 +257,8 @@ $f(p,Q) > \frac{\alpha + \beta}{min(\alpha, \beta)} \cdot \Delta(C,Q)$.
 
 \begin{proof}
 Assume that a query group $Q$ is given, $C_1$ is the current best cluster, and that a specific point $p$ does not belong to $C_1$. Assume also that $\alpha < \beta$. According to Equation (\ref{equ:filter-2}), if we create an arbitrary cluster $C_2$ with $p$ and other points, then
-$$f(p,Q) \leq f(O_{C_2}, Q) + V_{C_2} < \frac{\alpha+\beta}{\alpha} \cdot \Delta(C_2,Q) $$
-Therefore, if $p$ locates further than the bound $\frac{\alpha + \beta}{\alpha} \cdot  \Delta(C_1,Q)$ which created by the current best cluster $C_1$ (i.e., $f(p,Q) > \Delta(C_1,Q)$), we can infer that $\Delta(C_1, Q) < \Delta(C_2, Q)$. Hence, any cluster that contains $p$ will not better than $C_1$.
+$$f(p,Q) \leq f(O_{C_2}, Q) + V_{C_2} < \frac{\alpha+\beta}{\alpha} \cdot \Delta'(C_2,Q) $$
+Therefore, if $p$ locates further than the bound $\frac{\alpha + \beta}{\alpha} \cdot  \Delta'(C_1,Q)$ for the current best cluster $C_1$ (i.e., $f(p,Q) > \frac{\alpha + \beta}{\alpha} \cdot \Delta'(C_1,Q)$), we can infer that $\Delta(C_1, Q) < \Delta(C_2, Q)$. Hence, any cluster that contains $p$ will not better than $C_1$. If $\alpha \geq \beta$, we can prove the same thing by replacing $\frac{\alpha+\beta}{\alpha}$ with $\frac{\alpha+\beta}{\beta}$.
 \end{proof}
 From the theorem, whenever we find a current best cluster $C$, a point $p$ can be safely filtered if it locates out of the bound.
 
@@ -375,9 +375,9 @@ We notice that in the proposed point-base and group-base solutions, the most tim
 \end{algorithm}
 
 \section{Quadtree-based solution}
-Although we can now explore from the neighborhood of the query by grid, however grid cannot deal with the bias of the dataset because grid divides the space at even intervals. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, meaningless searches will occur. To solve this problem, we introduce the quadtree \cite{finkel1974quad}, which is reported to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for quadtree to solve the ANNH queries efficiently.
+Although we can now explore from the neighborhood of the query by the grid, the grid cannot deal with the bias of the dataset because the grid divides the space at even intervals. For example, when a dataset is placed on a grid cell far away from the query, as shown in Figures \ref{fig:solution-quadTree1}, meaningless searches will occur. To solve this problem, we introduce the quadtree \cite{finkel1974quad}, which is reported to be effective in NN problems by Shin et al.\cite{shin2019investigation}, and we propose a search method for quadtree to solve the ANNH queries efficiently.
 
-Figures \ref{fig:solution-quadTree2} shows an example of our proposed quadtree. In this case, the threshold is 2, the star is the center of gravity of the query. The round dot is the dataset, the dotted line is the grid, and the bold line is the boundary of the nodes in the quadtree. We use cells as adjuncts to the quadtree, and a cell has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is\_visited$, which indicates whether the node has been explored or not.
+Figures \ref{fig:solution-quadTree2} shows an example of our proposed quadtree. In this case, the threshold is 2, the star is the center of gravity of the query. The round dot is a dataset point, the dotted line is the grid, and the bold line is the boundary of the nodes in the quadtree. We use cells as adjuncts to the quadtree, and a cell has the address of the node to which it belongs. For example, $g_1$ belongs to node $N_1$, so it has an address of $N_1$, and similarly $g_2$ has an address of $N_2$. Also, each node has a flag called $is\_visited$, which indicates whether the node has been explored or not.
 
 Algorithm \ref{alg:quadtree} shows a pseudo-code of the quadtree-based method. The bound is initialized to the evaluation value for the nearest point of $Q$ (Line 1-4). Cells are expanded from around the query $Q$ (Line 5). If there are points in the visited cell, the point closest to the centroid of the query in the cell is used as pNext, otherwise, the point closest to the centroid of the query in node to which the cell belongs is used as pNext (Line 7-12). We create the clusters using pNext from the previous step and calculate $\Delta(.)$. If $\Delta(.)$ value is better than the current best cluster, update the best cluster and the bound. (Line 13-17). Then, set the $is\_visited$ flag of the visited node to true (Line 18). We repeat this steps for every cell in the non-visited node in the bound (Line 19).
 
@@ -445,7 +445,7 @@ Query points are randomly selected from a dataset. The default result size $k$ i
 
 The results of changing the query size using NE dataset are shown in Figures \ref{fig:querySize} (a) and (b). The quadtree-based method is the fastest for the sum and the maximum aggregate distances, followed by the grid-index-based method. This is because the search is performed from the vicinity of queries in the grid-index-based method and the quadtree-based method, therefore the bound used for filtering is appropriately set early and the amount of filtering is large. In the grid-index-based method for the sum aggregate distance, the result becomes faster as the query size becomes larger. This is because the larger the number of queries, the more appropriately bound is set and the larger the amount of filtering is.
 The quadtree-based method was about 10 times faster than the grid-index-based method. This is because the grid divides the space at even intervals, which causes unnecessary searches for cells which have no points, while the quadtree has no node which has no points because it determines the size of a node based on the density of points in the node, which reduces unnecessary searches and speeds up.
-The result of changing the query size using CAS dataset is shown in Figures \ref{fig:querySize} (c) and (d). The results in CAS are the same trend as the NE results.
+The result of changing the query size using CAS dataset is shown in Figures \ref{fig:querySize} (c) and (d). The results in CAS have the same trend as the NE results.
 The result of changing the cluster size using UN dataset is shown in Figures \ref{fig:querySize} (e) and (f). UN is a uniform distribution of points, and there is likely to be a cluster of answer around the centroid of the query. Therefor, the grid-index-based method and the quadtree-based method of UN are faster than the other datasets because they search from the centroid of the query.
 
 \begin{figure}
@@ -457,7 +457,7 @@ The result of changing the cluster size using UN dataset is shown in Figures \re
 \end{figure}
 
 The result of changing the cluster size is shown in Figures \ref{fig:clusterSize} (a) and (b). The quadtree-based method is the fastest for both aggregation distances.
-The result of changing the cluster size using CAS dataset is shown in Figures \ref{fig:clusterSize} (c) and (d). The results in CAS are same trend as the NE results.
+The result of changing the cluster size using CAS dataset is shown in Figures \ref{fig:clusterSize} (c) and (d). The results in CAS have same trend as the NE results.
 The result of changing the cluster size using UN dataset is shown in Figures \ref{fig:clusterSize} (e) and (f). As in the experiment with query size, the results for the grid-based method and the quadtree-based method of UN are faster than the other datasets.
 
 \begin{figure}
@@ -509,7 +509,7 @@ However, one drawback is that performance tends to decrease depending on the val
 
 
 \chapter*{Acknowledgements}
-I would like to thank Dr. Kitagawa, an advisor, for this research, Dr. Chen and Dr. Furuse. I also gratefully acknowledge the work of past and present members of my laboratory.
+I am grateful to Dr. Kitagawa, an advisor, for this research. I would like to express my appreciation to Dr. Chen and Dr. Furuse. I also gratefully acknowledge the work of past and present members of my laboratory.
 This work was supported by JSPS KAKENHI Grant Number JP19K12114.
 
 \nocite{ANNH-FICC} % ANNH on FICC
