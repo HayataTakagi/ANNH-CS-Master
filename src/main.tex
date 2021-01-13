@@ -229,7 +229,7 @@ By dividing both sides of the evaluation formula by $\alpha +\beta$, we obtain t
 \frac{\Delta(C,Q)}{\alpha+\beta} = \frac{\alpha}{\alpha+\beta} \cdot f(O_C, Q) + \frac{\beta}{\alpha+\beta} \cdot V_C\ \
 \end{equation}
 
-Since $\frac{1}{\alpha+\beta}$ is constant irrespective of the query or data set, the problem of $\frac{\Delta(C,Q)}{\alpha+\beta}$ is considered to be equivalent to $\Delta(C,Q)$. Hereafter, $\frac{\Delta(C,Q)}{\alpha+\beta}$ is denoted by $\Delta'(C,Q)$.
+Since $\frac{1}{\alpha+\beta}$ is constant irrespective of the query or data set, the problem of $\frac{\Delta(C,Q)}{\alpha+\beta}$ is considered to be equivalent to $\Delta(C,Q)$.  Therefore, our problem defined by Equation (\ref{equ:f-delta}) is equivalent to the case where $\alpha + \beta = 1$.
 
 When $\alpha < \beta$, constant terms including $\alpha$ and $\beta$ are as follows.
 \begin{equation}
@@ -239,26 +239,24 @@ When $\alpha < \beta$, constant terms including $\alpha$ and $\beta$ are as foll
 
 Using Equation (\ref{equ:filter-alpha-beta}), Equation (\ref{equ:filter-1}) is transformed as follows.
 
-$$\Delta'(C,Q) = \frac{\alpha}{\alpha+\beta} \cdot f(O_C, Q) + \frac{\beta}{\alpha+\beta} \cdot V_C$$
-
-$$\frac{\alpha+\beta}{\alpha} \cdot \Delta'(C,Q) = f(O_C, Q) + \frac{\beta}{\alpha} \cdot V_C$$
+$$\frac{1}{\alpha} \cdot \Delta(C,Q) = f(O_C, Q) + \frac{\beta}{\alpha} \cdot V_C$$
 
 \begin{equation}
 \label{equ:filter-2}
-\frac{\alpha+\beta}{\alpha} \cdot \Delta'(C,Q) > f(O_C, Q) + V_C
+\frac{1}{\alpha} \cdot \Delta(C,Q) > f(O_C, Q) + V_C
 \end{equation}
 
 The following theorem of filtering can be derived from Equation (\ref{equ:filter-2}).
 
 \begin{theorem}
 Given a query group $Q$ and a cluster $C$. Any cluster containing point p cannot be a better solution than $C$ if
-$f(p,Q) > \frac{\alpha + \beta}{min(\alpha, \beta)} \cdot \Delta(C,Q)$.
+$f(p,Q) > \frac{1}{min(\alpha, \beta)} \cdot \Delta(C,Q)$.
 \end{theorem}
 
 \begin{proof}
 Assume that a query group $Q$ is given, $C_1$ is the current best cluster, and that a specific point $p$ does not belong to $C_1$. Assume also that $\alpha < \beta$. According to Equation (\ref{equ:filter-2}), if we create an arbitrary cluster $C_2$ with $p$ and other points, then
-$$f(p,Q) \leq f(O_{C_2}, Q) + V_{C_2} < \frac{\alpha+\beta}{\alpha} \cdot \Delta'(C_2,Q) $$
-Therefore, if $p$ locates further than the bound $\frac{\alpha + \beta}{\alpha} \cdot  \Delta'(C_1,Q)$ for the current best cluster $C_1$ (i.e., $f(p,Q) > \frac{\alpha + \beta}{\alpha} \cdot \Delta'(C_1,Q)$), we can infer that $\Delta(C_1, Q) < \Delta(C_2, Q)$. Hence, any cluster that contains $p$ will not better than $C_1$. If $\alpha \geq \beta$, we can prove the same thing by replacing $\frac{\alpha+\beta}{\alpha}$ with $\frac{\alpha+\beta}{\beta}$.
+$$f(p,Q) \leq f(O_{C_2}, Q) + V_{C_2} < \frac{1}{\alpha} \cdot \Delta(C_2,Q) $$
+Therefore, if $p$ locates further than the bound $\frac{1}{\alpha} \cdot  \Delta(C_1,Q)$ for the current best cluster $C_1$ (i.e., $f(p,Q) > \frac{1}{\alpha} \cdot \Delta(C_1,Q)$), we can infer that $\Delta(C_1, Q) < \Delta(C_2, Q)$. Hence, any cluster that contains $p$ will not better than $C_1$. If $\alpha \geq \beta$, we can prove the same thing by replacing $\frac{1}{\alpha}$ with $\frac{1}{\beta}$.
 \end{proof}
 From the theorem, whenever we find a current best cluster $C$, a point $p$ can be safely filtered if it locates out of the bound.
 
@@ -510,7 +508,7 @@ However, one drawback is that performance tends to decrease depending on the val
 
 \chapter*{Acknowledgments}
 I am grateful to my thesis adviser Dr. Kitagawa for his encouragement, numerous suggestions, and discussions on this research.
-I would like to thank Dr. Furuse for their constant encouragement and technical advises.
+I would like to thank Dr. Furuse for their constant encouragement and technical advice.
 Especially thank to Dr. Chen for his helpful suggestions and discussions throughout the course of this research.
 I also gratefully acknowledge the work of past and present members of my laboratory.
 
