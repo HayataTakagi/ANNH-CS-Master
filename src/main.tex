@@ -490,7 +490,7 @@ The result of changing the grid size is shown in Figure \ref{fig:gridSize}. For 
     \label{fig:gridSize}
 \end{figure}
 
-The result of changing $\alpha$ is shown in Figure \ref{fig:alpha}. For all methods, when $\alpha$ approaches 1, the processing time become large. The point-base method and the mbr-based method in all experiments which alpha is greater than 0.6, and the grid-based method in the CAS/MAX experiment which alpha is greater than 0.7 are omitted because the processing time become too large. As alpha becomes larger, the filtering function do not work well and the processing time increase. In the NE dataset and the CAS dataset, quadtree-based method is the fastest and has the slowest increase in processing time. In the UN dataset, the grid-based method is faster than the quadtree-based method when $\alpha$ is smaller than 0.6 because the answer clusters are more likely to be near the centroid of query.
+The result of changing $\alpha$ is shown in Figure \ref{fig:alpha}. For all methods, when $\alpha$ approaches 1, the processing time become large. The point-base method and the mbr-based method in all experiments which $\alpha$ is greater than 0.6, and the grid-based method in the CAS/MAX experiment which $\alpha$ is greater than 0.7 are omitted because the processing time become too large. As $\alpha$ becomes larger, the filtering function do not work well and the processing time increase. In the NE dataset and the CAS dataset, quadtree-based method is the fastest and has the slowest increase in processing time. In the UN dataset, the grid-based method is faster than the quadtree-based method when $\alpha$ is smaller than 0.6 because the answer clusters are more likely to be near the centroid of query.
 
 \begin{figure}
     \begin{center}
@@ -510,7 +510,6 @@ However, one drawback is that performance tends to decrease depending on the val
 
 \chapter*{Acknowledgements}
 I am grateful to Dr. Kitagawa, an advisor, for this research. I would like to express my appreciation to Dr. Chen and Dr. Furuse. I also gratefully acknowledge the work of past and present members of my laboratory.
-This work was supported by JSPS KAKENHI Grant Number JP19K12114.
 
 \nocite{ANNH-FICC} % ANNH on FICC
 \bibliographystyle{unsrt}
