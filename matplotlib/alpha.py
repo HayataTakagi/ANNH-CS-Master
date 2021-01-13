@@ -14,14 +14,14 @@ def main():
     ax.plot(ne_sum_data[:, 0], ne_sum_data_[:, 3], marker='o', label='Grid')
     ax.plot(ne_sum_data[:, 0], ne_sum_data_[:, 4], marker='^', label='Quatree')
     ax.set_title('(a) NE,SUM', loc='center', y=-0.27, fontweight='bold')
-    ax.set_ylim(10, 100000)
+    # ax.set_ylim(10, 100000)
 
     ne_max_data = np.loadtxt('data/A-NE-MAX.csv', skiprows=1, delimiter=',')
     ne_max_data_ = ne_max_data / 1000  # μsからmsへの変換
     ax2 = fig.add_subplot(322, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax2.plot(ne_max_data[0:5, 0], ne_max_data_[0:5, 1], marker='x')
     ax2.plot(ne_max_data[0:5, 0], ne_max_data_[0:5, 2], marker='s')
-    ax2.plot(ne_max_data[:, 0], ne_max_data_[:, 3], marker='o')
+    ax2.plot(ne_max_data[0:6, 0], ne_max_data_[0:6, 3], marker='o')
     ax2.plot(ne_max_data[:, 0], ne_max_data_[:, 4], marker='^')
     ax2.set_title('(b) NE,MAX', loc='center', y=-0.27, fontweight='bold')
     # ax2.set_ylim(10, 1000000)
@@ -34,7 +34,7 @@ def main():
     ax3.plot(cas_sum_data[:, 0], cas_sum_data_[:, 3], marker='o')
     ax3.plot(cas_sum_data[:, 0], cas_sum_data_[:, 4], marker='^')
     ax3.set_title('(c) CAS,SUM', loc='center', y=-0.27, fontweight='bold')
-    ax3.set_ylim(10, 100000)
+    # ax3.set_ylim(10, 100000)
 
     cas_max_data = np.loadtxt('data/A-CAS-MAX.csv', skiprows=1, delimiter=',')
     cas_max_data_ = cas_max_data / 1000  # μsからmsへの変換
@@ -54,14 +54,14 @@ def main():
     ax5.plot(un_sum_data[:, 0], un_sum_data_[:, 3], marker='o')
     ax5.plot(un_sum_data[:, 0], un_sum_data_[:, 4], marker='^')
     ax5.set_title('(e) UN,SUM', loc='center', y=-0.27, fontweight='bold')
-    ax5.set_ylim(10, 1000000)
+    # ax5.set_ylim(10, 1000000)
 
     un_max_data = np.loadtxt('data/A-UN-MAX.csv', skiprows=1, delimiter=',')
     un_max_data_ = un_max_data / 1000  # μsからmsへの変換
     ax6 = fig.add_subplot(326, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax6.plot(un_max_data[0:5, 0], un_max_data_[0:5, 1], marker='x')
     ax6.plot(un_max_data[0:5, 0], un_max_data_[0:5, 2], marker='s')
-    ax6.plot(un_max_data[:, 0], un_max_data_[:, 3], marker='o')
+    ax6.plot(un_max_data[0:6, 0], un_max_data_[0:6, 3], marker='o')
     ax6.plot(un_max_data[:, 0], un_max_data_[:, 4], marker='^')
     ax6.set_title('(f) UN,MAX', loc='center', y=-0.27, fontweight='bold')
     # ax6.set_ylim(10, 1000000)
