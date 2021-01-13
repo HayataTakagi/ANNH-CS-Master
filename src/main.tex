@@ -220,7 +220,7 @@ V_C = \frac{1}{|C|} \sum_{i=1}^{n} \{dist(p_i, O_C)\}^2
 
 \section{Estimating the Filtering Bound}
 \label{subsection:filtering}
-Creating the nearest neighbor cluster for every the data point $p$ and calculating the value of $\Delta(.)$ are very inefficient. To improve efficiency, filtering is performed before calculating the k-nearest neighborhood of the point $p$.
+Creating the nearest neighbor cluster for each data point $p$ and calculating the value of $\Delta(.)$ are very inefficient. To improve efficiency, filtering is performed before calculating the k-nearest neighborhood of the point $p$.
 
 By dividing both sides of the evaluation formula by $\alpha +\beta$, we obtain the following formula.
 
@@ -508,8 +508,11 @@ Finding the nearest cluster is an important issue in query processing and data m
 However, one drawback is that performance tends to decrease depending on the value of the smoothing parameter. Hence, our future work will concentrate on solving this problem.
 
 
-\chapter*{Acknowledgements}
-I am grateful to Dr. Kitagawa, an advisor, for this research. I would like to express my appreciation to Dr. Chen and Dr. Furuse. I also gratefully acknowledge the work of past and present members of my laboratory.
+\chapter*{Acknowledgments}
+I am grateful to my thesis adviser Dr. Kitagawa for his encouragement, numerous suggestions, and discussions on this research.
+I would like to thank Dr. Furuse for their constant encouragement and technical advises.
+Especially thank to Dr. Chen for his helpful suggestions and discussions throughout the course of this research.
+I also gratefully acknowledge the work of past and present members of my laboratory.
 
 \nocite{ANNH-FICC} % ANNH on FICC
 \bibliographystyle{unsrt}
