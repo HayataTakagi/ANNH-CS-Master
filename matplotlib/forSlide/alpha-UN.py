@@ -9,6 +9,7 @@ def main():
     ne_sum_data = np.loadtxt('../data/A-UN-SUM.csv', skiprows=1, delimiter=',')
     ne_sum_data_ = ne_sum_data / 1000  # μsからmsへの変換
     ax = fig.add_subplot(121, xlabel='α', ylabel='Processing time (ms)', yscale='log')
+    ax.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax.plot(ne_sum_data[0:5, 0], ne_sum_data_[0:5, 1], marker='x', label='Point')
     ax.plot(ne_sum_data[0:5, 0], ne_sum_data_[0:5, 2], marker='s', label='MBR')
     ax.plot(ne_sum_data[:, 0], ne_sum_data_[:, 3], marker='o', label='Grid')
@@ -19,6 +20,7 @@ def main():
     ne_max_data = np.loadtxt('../data/A-UN-MAX.csv', skiprows=1, delimiter=',')
     ne_max_data_ = ne_max_data / 1000  # μsからmsへの変換
     ax2 = fig.add_subplot(122, xlabel='α', ylabel='Processing time (ms)', yscale='log')
+    ax2.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax2.plot(ne_max_data[0:5, 0], ne_max_data_[0:5, 1], marker='x')
     ax2.plot(ne_max_data[0:5, 0], ne_max_data_[0:5, 2], marker='s')
     ax2.plot(ne_max_data[0:6, 0], ne_max_data_[0:6, 3], marker='o')
