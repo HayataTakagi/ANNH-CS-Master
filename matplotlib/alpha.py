@@ -5,9 +5,10 @@ import numpy as np
 def main():
     plt.rcParams['font.family'] = 'Times New Roman'  # 全体のフォントを設定
     fig = plt.figure(figsize=(6, 9), dpi=300)
+    test_size = 100
 
     ne_sum_data = np.loadtxt('data/A-NE-SUM.csv', skiprows=1, delimiter=',')
-    ne_sum_data_ = ne_sum_data / 1000  # μsからmsへの変換
+    ne_sum_data_ = ne_sum_data / (1000 * test_size)  # μsからmsへの変換
     ax = fig.add_subplot(321, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax.plot(ne_sum_data[0:5, 0], ne_sum_data_[0:5, 1], marker='x', label='Point')
@@ -18,7 +19,7 @@ def main():
     # ax.set_ylim(10, 100000)
 
     ne_max_data = np.loadtxt('data/A-NE-MAX.csv', skiprows=1, delimiter=',')
-    ne_max_data_ = ne_max_data / 1000  # μsからmsへの変換
+    ne_max_data_ = ne_max_data / (1000 * test_size)  # μsからmsへの変換
     ax2 = fig.add_subplot(322, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax2.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax2.plot(ne_max_data[0:5, 0], ne_max_data_[0:5, 1], marker='x')
@@ -29,7 +30,7 @@ def main():
     # ax2.set_ylim(10, 1000000)
 
     cas_sum_data = np.loadtxt('data/A-CAS-SUM.csv', skiprows=1, delimiter=',')
-    cas_sum_data_ = cas_sum_data / 1000  # μsからmsへの変換
+    cas_sum_data_ = cas_sum_data / (1000 * test_size)  # μsからmsへの変換
     ax3 = fig.add_subplot(323, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax3.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax3.plot(cas_sum_data[0:5, 0], cas_sum_data_[0:5, 1], marker='x')
@@ -40,7 +41,7 @@ def main():
     # ax3.set_ylim(10, 100000)
 
     cas_max_data = np.loadtxt('data/A-CAS-MAX.csv', skiprows=1, delimiter=',')
-    cas_max_data_ = cas_max_data / 1000  # μsからmsへの変換
+    cas_max_data_ = cas_max_data / (1000 * test_size)  # μsからmsへの変換
     ax4 = fig.add_subplot(324, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax4.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax4.plot(cas_max_data[0:5, 0], cas_max_data_[0:5, 1], marker='x')
@@ -51,7 +52,7 @@ def main():
     # ax4.set_ylim(10, 100000)
 
     un_sum_data = np.loadtxt('data/A-UN-SUM.csv', skiprows=1, delimiter=',')
-    un_sum_data_ = un_sum_data / 1000  # μsからmsへの変換
+    un_sum_data_ = un_sum_data / (1000 * test_size)  # μsからmsへの変換
     ax5 = fig.add_subplot(325, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax5.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax5.plot(un_sum_data[0:5, 0], un_sum_data_[0:5, 1], marker='x')
@@ -62,7 +63,7 @@ def main():
     # ax5.set_ylim(10, 1000000)
 
     un_max_data = np.loadtxt('data/A-UN-MAX.csv', skiprows=1, delimiter=',')
-    un_max_data_ = un_max_data / 1000  # μsからmsへの変換
+    un_max_data_ = un_max_data / (1000 * test_size)  # μsからmsへの変換
     ax6 = fig.add_subplot(326, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax6.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax6.plot(un_max_data[0:5, 0], un_max_data_[0:5, 1], marker='x')

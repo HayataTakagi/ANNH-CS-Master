@@ -5,9 +5,10 @@ import numpy as np
 def main():
     plt.rcParams['font.family'] = 'Times New Roman'  # 全体のフォントを設定
     fig = plt.figure(figsize=(6, 3.5), dpi=300)
+    test_size = 100
 
     ne_sum_data = np.loadtxt('../data/A-NE-SUM.csv', skiprows=1, delimiter=',')
-    ne_sum_data_ = ne_sum_data / 1000  # μsからmsへの変換
+    ne_sum_data_ = ne_sum_data / (1000 * test_size)  # μsからmsへの変換
     ax = fig.add_subplot(121, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax.plot(ne_sum_data[0:5, 0], ne_sum_data_[0:5, 1], marker='x', label='Point')
@@ -18,7 +19,7 @@ def main():
     # ax.set_ylim(10, 100000)
 
     ne_max_data = np.loadtxt('../data/A-NE-MAX.csv', skiprows=1, delimiter=',')
-    ne_max_data_ = ne_max_data / 1000  # μsからmsへの変換
+    ne_max_data_ = ne_max_data / (1000 * test_size)  # μsからmsへの変換
     ax2 = fig.add_subplot(122, xlabel='α', ylabel='Processing time (ms)', yscale='log')
     ax2.axvline(0.5, linestyle="dashed", color="black", linewidth=1, alpha=0.5)
     ax2.plot(ne_max_data[0:5, 0], ne_max_data_[0:5, 1], marker='x')
