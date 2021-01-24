@@ -5,7 +5,7 @@ import numpy as np
 def main():
     plt.rcParams['font.family'] = 'Times New Roman'  # 全体のフォントを設定
     fig = plt.figure(figsize=(6, 3.5), dpi=300)
-    test_size = 100
+    test_size = 10
 
     q_ne_sum_data = np.loadtxt('../data/Q-NE-SUM.csv', skiprows=2, delimiter=',')
     q_ne_sum_data_ = q_ne_sum_data / (1000 * test_size)  # μsからmsへの変換
@@ -32,7 +32,7 @@ def main():
     plt.tight_layout()
     plt.subplots_adjust(top=0.85)
 
-    fig.savefig('export/querysize-NE.pdf', facecolor=fig.get_facecolor(), edgecolor=fig.get_edgecolor())
+    fig.savefig('export/querysize-NE2.pdf', facecolor=fig.get_facecolor(), edgecolor=fig.get_edgecolor())
 
 
 if __name__ == '__main__':

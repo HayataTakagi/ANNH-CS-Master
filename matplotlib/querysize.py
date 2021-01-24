@@ -5,7 +5,7 @@ import numpy as np
 def main():
     plt.rcParams['font.family'] = 'Times New Roman'  # 全体のフォントを設定
     fig = plt.figure(figsize=(6, 9), dpi=300)
-    test_size = 100
+    test_size = 10
 
     q_ne_sum_data = np.loadtxt('data/Q-NE-SUM.csv', skiprows=2, delimiter=',')
     q_ne_sum_data_ = q_ne_sum_data / (1000 * test_size)  # μsからmsへの変換

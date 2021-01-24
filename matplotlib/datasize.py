@@ -5,7 +5,7 @@ import numpy as np
 def main():
     plt.rcParams['font.family'] = 'Times New Roman'  # 全体のフォントを設定
     fig = plt.figure(figsize=(6, 9), dpi=300)
-    test_size = 100
+    test_size = 10
 
     ds_ne_sum_data = np.loadtxt('data/DS-NE-SUM.csv', skiprows=1, delimiter=',')
     ds_ne_sum_data_ = ds_ne_sum_data / (1000 * test_size)  # μsからmsへの変換
