@@ -74,7 +74,7 @@
 \end{center}
 \vspace{0.2in}
 
-Efficiency of finding nearest clusters is a principal factor in query processing and data mining, and this can be applied to location information services and services using point of interests (POI). However, no research is currently aimed at finding the nearest cluster of multiple query points. In this thesis, we propose Aggregate Nearest Neighborhood Query (ANNH) for searching the nearest cluster of multiple queries with aggregation distance between multiple query points and clusters. Further, one disadvantage is that previous research on finding the nearest cluster of a single query point represents clusters only by circles, and this makes the cluster size increase when we deal with biased datasets. Alternatively, we present a solution to this challenge in ANNH by evaluating cluster density by variance.
+Efficiency of finding nearest clusters is a principal factor in query processing and data mining, and this can be applied to location information services and services using point of interests (POI). However, no research is currently aimed at finding the nearest cluster of multiple query points. In this thesis, we propose Aggregate Nearest Neighborhood Query (ANNH) for searching the nearest cluster of multiple queries with aggregation distance between multiple query points and clusters. Further, one disadvantage is that previous research on finding the nearest cluster of a single query point represents clusters only by circles, and this makes the cluster size increase when we deal with biased datasets. Alternatively, we present a solution to this challenge in ANNH by evaluating cluster density by standard deviation.
 
 %%%%%
 \par
@@ -104,12 +104,12 @@ Fig. \ref{fig:example-max} shows another example on determining a meeting place.
 Although the density of the cluster is almost the same as that of the cluster in Fig. \ref{fig:example-max}, it is not suitable as a meeting place because the maximum distance distance between each member of the query and the cluster is larger than the maximum value of the cluster in Fig. \ref{fig:example-max}.
 
 To solve the above problem like in the example, we propose a new query processing problem of finding nearest neighborhood, named Aggregate Nearest Neighborhood Queries (ANNH).
-ANNH searches for data points and finds clusters based on the proposed algorithm. ANNH calculates cluster scores using the evaluation function and finds a cluster which is denser and closer to the queries. ANNH evaluates the distance between multiple queries and a cluster using an aggregate distance function, and the cluster density using variance. The proposed ANNH is formally defined in Section \ref{section:annh}.
+ANNH searches for data points and finds clusters based on the proposed algorithm. ANNH calculates cluster scores using the evaluation function and finds a cluster which is denser and closer to the queries. ANNH evaluates the distance between multiple queries and a cluster using an aggregate distance function, and the cluster density using standard deviation. The proposed ANNH is formally defined in Section \ref{section:annh}.
 
 Major contributions of this thesis are as follows.
 \begin{itemize}
     \item  To define a general and realistic neighborhood query problem for multiple queries considering different neighborhood scale, we propose and formalize the Aggregated Nearest Neighborhood Query (ANNH). ANNH uses smoothing parameters and aggregated distance functions to find a nearest cluster for multiple queries, responding to different user preferences between aggregate distance and scale.
-  \item ANNH makes it possible to find more exact clusters by evaluating the cluster density by variance without fixing the cluster shape.
+  \item ANNH makes it possible to find more exact clusters by evaluating the cluster density by standard deviation without fixing the cluster shape.
   \item To solve ANNH efficiently, we propose four methods: Point-based solution, Minimum bounding rectangle-based (MBR-based) solution, Grid-index-based solution and Quadtree-based solution. MBR-based solution utilizes the R-tree\cite{R-tree} structure to index points, and uses a best-distance methodology to filter unnecessary points. Grid-index-based solution is based on the grid structure\cite{BNNH}, which enables to retrieve k nearest neighbor points directly hence has better performance on ANNH query. Quadtree-based solution combines Grid-based solution with the quadtree structure\cite{finkel1974quad} to make it even faster.
 \end{itemize}
 
@@ -134,12 +134,12 @@ In multiple fields including database management systems, data mining and inform
 
 \section{Group version of nearest neighbor query.}
 As real-life applications are dissatisfied with only evaluating the relationship between single points like the conventional NN query, many variants of the NN query have been studied. Papadias et al. developed aggregate nearest neighbor query (ANN) \cite{ANN} to retrieve points with the smallest aggregate distance to multiple query points in metric space. ANN inputs a group of query points Q and aims to find a nearest single point that has the smallest aggregate distance to Q. Thus, although ANNH and ANN are similar in that they receive multiple queries, the difference is that ANNH explores clusters whereas ANN explores points. Deng et al. \cite{GNG} proposed a group nearest group query (GNG), which is a spatial query returning a group of points. In GNG, the response group is evaluated based on the distance from the query for each point, whereas in ANNH, a set of points is regarded as a cluster, and the cluster density is also included in the evaluation. Besides evaluating the similarity in terms of the Euclidean distance function, Dong et al. \cite{dong2017grid} proposed an aggregate reverse rank query which uses an inner product function to evaluating the similarity between a point and a group of points in the spatial algorithm. Nearest neighborhood search (NNH) \cite{NNH} extends the NN query and for query point q returns the nearest cluster which is a a circle with fixed radius $\rho$. Because the radius is fixed, it is impossible to
-always find the circle containing $k$ points. The BNNH \cite{BNNH} extends NNH so that the radius can be changed to guarantee $k$ points found, and the balance between the cluster size and the distance from the query point is considered using smooth parameters. While BNNH is given a single query point and judges clusters density by the radius of the circle, ANNH is given multiple query points and judges clusters density by the variance, so ANNH can find more dense clusters.
+always find the circle containing $k$ points. The BNNH \cite{BNNH} extends NNH so that the radius can be changed to guarantee $k$ points found, and the balance between the cluster size and the distance from the query point is considered using smooth parameters. While BNNH is given a single query point and judges clusters density by the radius of the circle, ANNH is given multiple query points and judges clusters density by the standard deviation, so ANNH can find more dense clusters.
 
 \chapter{Aggregate Nearest Neighborhood Queries}
 \label{section:annh}
 ANN \cite {ANN} takes multiple query points as input and outputs a single point. BNNH \cite{BNNH} takes a single point as input and clusters as output. ANNH realizes a combination of multiple queries for input and a cluster of nearest neighbors for query, which is a combination that cannot be searched in these previous methods.
-In BNNH, a cluster is defined as a circle, and the density was defined as the radius of the circle. This requires a calculation to form a circle and presents a problem in that it is not possible to detect bias in the data inside a cluster. ANNH does not limit the shape of a cluster to a circle, evaluates the degree of congestion based on the variance within the cluster, thereby achieving a reduction in the amount of computation and searching for a denser cluster.
+In BNNH, a cluster is defined as a circle, and the density was defined as the radius of the circle. This requires a calculation to form a circle and presents a problem in that it is not possible to detect bias in the data inside a cluster. ANNH does not limit the shape of a cluster to a circle, evaluates the degree of congestion based on the standard deviation within the cluster, thereby achieving a reduction in the amount of computation and searching for a denser cluster.
 
 The notations used in this thesis are shown in Table \ref{tab:var}. Given a query $Q$, a cluster size $k$, and balancing parameters $\alpha$ and $\beta$, ANNH search is to find the cluster closest to the given query. ANNH are formally defined as follows:
 
@@ -150,7 +150,7 @@ The notations used in this thesis are shown in Table \ref{tab:var}. Given a quer
       Symbols & Descriptions \\ \hline \hline
       $p, P$ & point, point set \\ \hline
       $q, Q$ & query point, query group \\ \hline
-      $C, V_C$ & cluster, variance of cluster \\ \hline
+      $C, V_C$ & cluster, standard deviation of cluster \\ \hline
       $O_C$ & cluster centroid \\ \hline
       $dist(p,q)$ & Euclidean distance between $p$ and $q$ \\ \hline
       $f(p, C)$  & aggregation distance between point $p$ and cluster $C$ \\ \hline
@@ -174,7 +174,7 @@ The neighborhood is defined as a cluster as follows.
 Given k, a neighborhood C is defined as a cluster including at least k points in the metric space.
 \end{definition}
 
-$V_C$ denotes the variance of C. The evaluation function $\Delta(\cdot)$ used in ANNH is as follows, which is a evaluation function modified from the one proposed in BNNH\cite{BNNH}. The function $f(\cdot)$ calculates the aggregation distance, which is described in detail in Section \ref{subsection:aggregate-distance}.
+$V_C$ denotes the standard deviation of C. The evaluation function $\Delta(\cdot)$ used in ANNH is as follows, which is a evaluation function modified from the one proposed in BNNH\cite{BNNH}. The function $f(\cdot)$ calculates the aggregation distance, which is described in detail in Section \ref{subsection:aggregate-distance}.
 
 \begin{equation}
 \label{equ:f-delta}
@@ -211,11 +211,11 @@ f_{max}(p,Q) = max_{i=1}^{n} dist(p,q_i)
 \end{equation}
 
 \section{Evaluation of Cluster Density}
-The cluster density is represented by the intracluster variance $V$. When the centroid of the cluster $C$ formed by the points $p_1, \cdots p_n$ is $O_C$, the equation for calculating the variance of $C$ is shown below.
+The cluster density is represented by the intracluster standard deviation $V$. When the centroid of the cluster $C$ formed by the points $p_1, \cdots p_n$ is $O_C$, the equation for calculating the standard deviation of $C$ is shown below.
 
 \begin{equation}
 \label{equ:w}
-V_C = \frac{1}{|C|} \sum_{i=1}^{n} \{dist(p_i, O_C)\}^2 
+V_C = \sqrt{\frac{1}{|C|} \sum_{i=1}^{n} \{dist(p_i, O_C)\}^2 }
 \end{equation}
 
 \section{Estimating the Filtering Bound}
@@ -467,7 +467,7 @@ The result of changing the cluster size using UN dataset is shown in Figures \re
 \end{figure}
 
 The result of changing the data size is shown in Figure \ref{fig:dataSize}. The processing time in grid-index-based method had a slower increasing trend than that in point-based method and mbr-based method. This is because the dataset is uniformly distributed, and there is a best cluster near the query.
-For the aggregate distance SUM, the processing time in the quadtree-based method became faster as the data size increased within the range of the data size where we experimented, and the quadtree-based method became the fastest with a data size of 50,000 in the UN dataset / SUM aggregation distance. This does not mean that it becomes faster as the data size increases, but rather that the appropriate grid size for a quadtree depends on the data size, and for the default grid size for a quadtree of 512, points were placed on nodes more appropriately when the data size was 100,000 rather than 10,000. The same trend was observed for the aggregation distance MAX, where a data size of 100,000 was more appropriate than 10,000 for the grid size of 512 for a quadtree.
+For the aggregate distance SUM, the processing time in the quadtree-based method became faster as the data size increased within the range of the data size where we experimented, and the quadtree-based method became the fastest with a data size of 75,000 in the UN dataset / SUM aggregation distance. This does not mean that it becomes faster as the data size increases, but rather that the appropriate grid size for a quadtree depends on the data size, and for the default grid size for a quadtree of 512, points were placed on nodes more appropriately when the data size was 100,000 rather than 10,000. The same trend was observed for the aggregation distance MAX, where a data size of 100,000 was more appropriate than 10,000 for the grid size of 512 for a quadtree.
 Because of this, the data size of 75000 is faster than 100000 in the CAS dataset / MAX aggregation distance.
 
 \begin{figure}
@@ -478,7 +478,7 @@ Because of this, the data size of 75000 is faster than 100000 in the CAS dataset
     \label{fig:dataSize}
 \end{figure}
 
-The result of changing the grid size is shown in Figure \ref{fig:gridSize}. For both aggregate distances SUM and MAX, the quadtree-based method is faster than grid-index-based method when the grid size of quadtree is 256 and 512. Therefore, the search is fast when the size of the base grid for a quadtree is appropriate for the distribution of the dataset, and the points are properly placed on the nodes.
+The result of changing the grid size is shown in Figure \ref{fig:gridSize}. For both aggregate distances SUM and MAX, the quadtree-based method is faster than grid-index-based method when the grid size of quadtree is 512 and 1024. Therefore, the search is fast when the size of the base grid for a quadtree is appropriate for the distribution of the dataset, and the points are properly placed on the nodes.
 
 \begin{figure}
     \begin{center}
@@ -488,7 +488,7 @@ The result of changing the grid size is shown in Figure \ref{fig:gridSize}. For 
     \label{fig:gridSize}
 \end{figure}
 
-The result of changing $\alpha$ is shown in Figure \ref{fig:alpha}. For all methods, when $\alpha$ approaches 1, the processing time become large. The point-base method and the mbr-based method in all experiments which $\alpha$ is greater than 0.6, and the grid-based method in the MAX experiments which $\alpha$ is greater than 0.7 are omitted because the processing time become too large. As $\alpha$ becomes larger, the filtering function do not work well and the processing time increase. In the NE dataset and the CAS dataset, quadtree-based method is the fastest and has the slowest increase in processing time. In the UN dataset, the grid-based method is faster than the quadtree-based method when $\alpha$ is lager than 0.5 because the answer clusters are more likely to be near the centroid of query.
+The result of changing $\alpha$ is shown in Figure \ref{fig:alpha}. The processing times increase as the difference between $\alpha$ and $\beta$ increases, and as $\alpha$ approaches around 0 and 1. Due to the relationship between the evaluation function and the bound, filtering might no longer be efficient. On the other hand, the quadtree-based method is less affected by bad effects than other methods.
 
 \begin{figure}
     \begin{center}
