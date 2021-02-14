@@ -28,7 +28,7 @@ def main():
     plt.tight_layout()
     plt.subplots_adjust(top=0.85)
 
-    fig.savefig('export/gridsize-NE.pdf', facecolor=fig.get_facecolor(), edgecolor=fig.get_edgecolor())
+    fig.savefig('export/gridsize-NE2.pdf', facecolor=fig.get_facecolor(), edgecolor=fig.get_edgecolor())
 
 
 if __name__ == '__main__':

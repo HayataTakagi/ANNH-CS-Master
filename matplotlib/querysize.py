@@ -73,7 +73,7 @@ def main():
     plt.tight_layout()
     plt.subplots_adjust(top=0.95, hspace=0.3)
 
-    fig.savefig('export/querysize.pdf', facecolor=fig.get_facecolor(), edgecolor=fig.get_edgecolor())
+    fig.savefig('export/querysize2.pdf', facecolor=fig.get_facecolor(), edgecolor=fig.get_edgecolor())
 
 
 if __name__ == '__main__':
