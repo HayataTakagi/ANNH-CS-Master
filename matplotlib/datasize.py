@@ -5,10 +5,11 @@ import numpy as np
 def main():
     plt.rcParams['font.family'] = 'Times New Roman'  # 全体のフォントを設定
     fig = plt.figure(figsize=(6, 9), dpi=300)
-    test_size = 10
+    sum_test_size = 70
+    max_test_size = 100
 
     ds_ne_sum_data = np.loadtxt('data/DS-NE-SUM.csv', skiprows=1, delimiter=',')
-    ds_ne_sum_data_ = ds_ne_sum_data / (1000 * test_size)  # μsからmsへの変換
+    ds_ne_sum_data_ = ds_ne_sum_data / (1000 * sum_test_size)  # μsからmsへの変換
     ax = fig.add_subplot(321, xlabel='Data size', ylabel='Processing time (ms)', yscale='log')
     ax.plot(ds_ne_sum_data[:, 0], ds_ne_sum_data_[:, 1], marker='x', label='Point')
     ax.plot(ds_ne_sum_data[:, 0], ds_ne_sum_data_[:, 2], marker='s', label='MBR')
@@ -18,7 +19,7 @@ def main():
     # ax.set_ylim(10, 100000)
 
     ds_ne_max_data = np.loadtxt('data/DS-NE-MAX.csv', skiprows=1, delimiter=',')
-    ds_ne_max_data_ = ds_ne_max_data / (1000 * test_size)  # μsからmsへの変換
+    ds_ne_max_data_ = ds_ne_max_data / (1000 * max_test_size)  # μsからmsへの変換
     ax2 = fig.add_subplot(322, xlabel='Data size', ylabel='Processing time (ms)', yscale='log')
     ax2.plot(ds_ne_max_data[:, 0], ds_ne_max_data_[:, 1], marker='x')
     ax2.plot(ds_ne_max_data[:, 0], ds_ne_max_data_[:, 2], marker='s')
@@ -28,7 +29,7 @@ def main():
     # ax2.set_ylim(10, 100000)
 
     ds_cas_sum_data = np.loadtxt('data/DS-CAS-SUM.csv', skiprows=1, delimiter=',')
-    ds_cas_sum_data_ = ds_cas_sum_data / (1000 * test_size)  # μsからmsへの変換
+    ds_cas_sum_data_ = ds_cas_sum_data / (1000 * sum_test_size)  # μsからmsへの変換
     ax3 = fig.add_subplot(323, xlabel='Data size', ylabel='Processing time (ms)', yscale='log')
     ax3.plot(ds_cas_sum_data[:, 0], ds_cas_sum_data_[:, 1], marker='x')
     ax3.plot(ds_cas_sum_data[:, 0], ds_cas_sum_data_[:, 2], marker='s')
@@ -38,7 +39,7 @@ def main():
     # ax3.set_ylim(10, 100000)
 
     ds_cas_max_data = np.loadtxt('data/DS-CAS-MAX.csv', skiprows=1, delimiter=',')
-    ds_cas_max_data_ = ds_cas_max_data / (1000 * test_size)  # μsからmsへの変換
+    ds_cas_max_data_ = ds_cas_max_data / (1000 * max_test_size)  # μsからmsへの変換
     ax4 = fig.add_subplot(324, xlabel='Data size', ylabel='Processing time (ms)', yscale='log')
     ax4.plot(ds_cas_max_data[:, 0], ds_cas_max_data_[:, 1], marker='x')
     ax4.plot(ds_cas_max_data[:, 0], ds_cas_max_data_[:, 2], marker='s')
@@ -48,7 +49,7 @@ def main():
     # ax4.set_ylim(10, 100000)
 
     ds_un_sum_data = np.loadtxt('data/DS-UN-SUM.csv', skiprows=1, delimiter=',')
-    ds_un_sum_data_ = ds_un_sum_data / (1000 * test_size)  # μsからmsへの変換
+    ds_un_sum_data_ = ds_un_sum_data / (1000 * sum_test_size)  # μsからmsへの変換
     ax5 = fig.add_subplot(325, xlabel='Data size', ylabel='Processing time (ms)', yscale='log')
     ax5.plot(ds_un_sum_data[:, 0], ds_un_sum_data_[:, 1], marker='x')
     ax5.plot(ds_un_sum_data[:, 0], ds_un_sum_data_[:, 2], marker='s')
@@ -58,7 +59,7 @@ def main():
     # ax5.set_ylim(10, 1000000)
 
     ds_un_max_data = np.loadtxt('data/DS-UN-MAX.csv', skiprows=1, delimiter=',')
-    ds_un_max_data_ = ds_un_max_data / (1000 * test_size)  # μsからmsへの変換
+    ds_un_max_data_ = ds_un_max_data / (1000 * max_test_size)  # μsからmsへの変換
     ax6 = fig.add_subplot(326, xlabel='Data size', ylabel='Processing time (ms)', yscale='log')
     ax6.plot(ds_un_max_data[:, 0], ds_un_max_data_[:, 1], marker='x')
     ax6.plot(ds_un_max_data[:, 0], ds_un_max_data_[:, 2], marker='s')
